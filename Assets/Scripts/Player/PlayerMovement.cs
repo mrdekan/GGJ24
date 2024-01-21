@@ -1,6 +1,6 @@
 using System.Collections;
 using UnityEngine;
-
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     public float _speed = 6.0f;
@@ -29,20 +29,14 @@ public class PlayerMovement : MonoBehaviour
         _characterController.Move(movement);
     }
 
-    public void AllowWalking()
-    {
+    public void AllowWalking() =>
         isWalkable = true;
-    }
 
-    public void BanWalking()
-    {
+    public void BanWalking() =>
         isWalkable = false;
-    }
 
-    public void MoveTo(Vector3 targetPosition)
-    {
+    public void MoveTo(Vector3 targetPosition) =>
         StartCoroutine(MoveToCoroutine(targetPosition));
-    }
 
     private IEnumerator MoveToCoroutine(Vector3 targetPosition)
     {
