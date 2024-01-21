@@ -13,6 +13,8 @@ public class PauseManager : MonoBehaviour
     }
     public void SetPause(bool isPaused)
     {
+        Cursor.visible = isPaused;
+        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
         IsPaused = isPaused;
         OnPauseChange?.Invoke(IsPaused);
         Time.timeScale = IsPaused ? 0 : 1;

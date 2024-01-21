@@ -6,21 +6,32 @@ public class PlayerMovement : MonoBehaviour
     public float _speed = 6.0f;
     private bool isWalkable = true;
     private CharacterController _characterController;
-
+    private AudioSource _audio;
+    private bool walkedOnPreviousFrame = false;
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _characterController = GetComponent<CharacterController>();
+        _audio = GetComponent<AudioSource>();
         if (_characterController == null)
             Debug.LogError("CharacterController not found on " + gameObject.name);
     }
 
     private void Update()
     {
-        if (!isWalkable) return;
+        if (!isWalkable)
+        {
+            _audio.Stop();
+            return;
+        }
         float deltaX = Input.GetAxis("Horizontal") * _speed;
         float deltaZ = Input.GetAxis("Vertical") * _speed;
+        if (deltaX == 0 && deltaZ == 0)
+            _audio.Stop();
+        else if ((deltaX != 0 || deltaZ != 0) && !walkedOnPreviousFrame)
+            _audio.Play();
+        walkedOnPreviousFrame = deltaX != 0 || deltaZ != 0;
         Vector3 movement = new Vector3(deltaX, -9.8f, deltaZ);
         movement = Vector3.ClampMagnitude(movement, _speed);
 
@@ -41,10 +52,10 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator MoveToCoroutine(Vector3 targetPosition)
     {
 
-        while ((transform.position - targetPosition).magnitude > 0.001)
+        while ((transform.position - targetPosition).magnitude > 0.005)
         {
             Vector3 position = targetPosition - transform.position;
-            position = _speed * Time.deltaTime * position.normalized;
+            position = _speed / 2 * Time.deltaTime * position.normalized;
             _characterController.Move(position);
             yield return null;
         }

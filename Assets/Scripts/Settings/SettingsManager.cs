@@ -2,26 +2,49 @@
 
 public class SettingsManager : MonoBehaviour
 {
-    private GameSettings gameSettings;
+    public GameSettings GameSettings { get; private set; }
     public delegate void VolumeChange(float volume);
+    public delegate void ValueChanged(bool value);
     public event VolumeChange OnEffectsVolumeChange;
     public event VolumeChange OnMusicVolumeChange;
-
-
-    public void LoadSettings() => gameSettings = FileWorker.LoadSettings();
-    public void SaveSettings() => FileWorker.SaveSettings(gameSettings);
+    public event ValueChanged OnVSyncChange;
+    private void Start()
+    {
+        Application.targetFrameRate = -1;
+        OnVSyncChange += ApplyVSync;
+    }
+    private void ApplyVSync(bool value)
+    {
+        QualitySettings.vSyncCount = value ? 1 : 0;
+        Debug.Log(QualitySettings.vSyncCount);
+    }
+    public void SetValue(string name, bool value)
+    {
+        if (name == "VSync")
+        {
+            GameSettings.VSync = value;
+            OnVSyncChange?.Invoke(value);
+        }
+    }
+    public void LoadSettings()
+    {
+        GameSettings = FileWorker.LoadSettings();
+        GameSettings.VSync ??= false;
+    }
+    public void SaveSettings() => FileWorker.SaveSettings(GameSettings);
     public void RestoreSettings()
     {
         LoadSettings();
-        OnEffectsVolumeChange?.Invoke(gameSettings.EffectsVolume);
-        OnMusicVolumeChange?.Invoke(gameSettings.MusicVolume);
+        OnEffectsVolumeChange?.Invoke(GameSettings.EffectsVolume);
+        OnMusicVolumeChange?.Invoke(GameSettings.MusicVolume);
+        OnVSyncChange?.Invoke(GameSettings.VSync ?? false);
     }
 
     public float GetVolume(SoundsType soundType) =>
         soundType switch
         {
-            SoundsType.Effect => gameSettings.EffectsVolume,
-            SoundsType.Music => gameSettings.MusicVolume,
+            SoundsType.Effect => GameSettings.EffectsVolume,
+            SoundsType.Music => GameSettings.MusicVolume,
             _ => 0.5f,
         };
 
@@ -31,11 +54,11 @@ public class SettingsManager : MonoBehaviour
         switch (soundType)
         {
             case SoundsType.Effect:
-                gameSettings.EffectsVolume = volume;
+                GameSettings.EffectsVolume = volume;
                 OnEffectsVolumeChange?.Invoke(volume);
                 break;
             case SoundsType.Music:
-                gameSettings.MusicVolume = volume;
+                GameSettings.MusicVolume = volume;
                 OnMusicVolumeChange?.Invoke(volume);
                 break;
         }

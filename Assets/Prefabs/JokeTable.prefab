@@ -50,6 +50,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: {fileID: 7527706941632817138}
   content: {fileID: 2660550525191207023}
+  _clips:
+  - {fileID: 8300000, guid: 0cdd2a9ca3a249546a2adfa84e8457c8, type: 3}
+  - {fileID: 8300000, guid: 2349dc4a0ca9f054180cb155efb88633, type: 3}
+  - {fileID: 8300000, guid: 43980a64ec955494ba4fd525a3bde2c3, type: 3}
+  - {fileID: 8300000, guid: 29eccb51663d94443bdb6fcf09877215, type: 3}
+  - {fileID: 8300000, guid: 1adef2707091985429e2b23ebd2dd171, type: 3}
 --- !u!65 &8306189614294433593
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -19,6 +19,22 @@ public class VolumeController : MonoBehaviour
                 Game.Instance.Settings.OnMusicVolumeChange += ApplyVolume;
                 break;
         }
+        if (_soundType == SoundsType.Effect && Game.Instance.Pause != null)
+            Game.Instance.Pause.OnPauseChange += ReactOnPause;
+    }
+    public void ReactOnPause(bool isPaused)
+    {
+        try
+        {
+            if (isPaused)
+                _audio.Pause();
+            else
+                _audio.UnPause();
+        }
+        catch
+        {
+            Game.Instance.Pause.OnPauseChange -= ReactOnPause;
+        }
     }
     public void ApplyVolume(float volume)
     {
