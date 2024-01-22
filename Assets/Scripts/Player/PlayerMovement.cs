@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -8,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController _characterController;
     private AudioSource _audio;
     private bool walkedOnPreviousFrame = false;
+    [SerializeField] private List<MouseLook> mouseLooks = new();
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -17,7 +19,18 @@ public class PlayerMovement : MonoBehaviour
         if (_characterController == null)
             Debug.LogError("CharacterController not found on " + gameObject.name);
     }
-
+    public void BanAllMovement()
+    {
+        BanWalking();
+        foreach (var rotater in mouseLooks)
+            rotater.BanRotation();
+    }
+    public void AllowAllMovement()
+    {
+        AllowWalking();
+        foreach (var rotater in mouseLooks)
+            rotater.AllowRotation();
+    }
     private void Update()
     {
         if (!isWalkable)
@@ -27,12 +40,12 @@ public class PlayerMovement : MonoBehaviour
         }
         float deltaX = Input.GetAxis("Horizontal") * _speed;
         float deltaZ = Input.GetAxis("Vertical") * _speed;
-        if (deltaX == 0 && deltaZ == 0)
+        if (deltaX == 0 && deltaZ == 0 && _audio.isPlaying)
             _audio.Stop();
-        else if ((deltaX != 0 || deltaZ != 0) && !walkedOnPreviousFrame)
+        else if ((deltaX != 0 || deltaZ != 0) && !walkedOnPreviousFrame && !_audio.isPlaying)
             _audio.Play();
         walkedOnPreviousFrame = deltaX != 0 || deltaZ != 0;
-        Vector3 movement = new Vector3(deltaX, -9.8f, deltaZ);
+        Vector3 movement = new(deltaX, -9.8f, deltaZ);
         movement = Vector3.ClampMagnitude(movement, _speed);
 
         movement *= Time.deltaTime;

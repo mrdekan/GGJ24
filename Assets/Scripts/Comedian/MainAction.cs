@@ -25,9 +25,15 @@ public class MainAction : MonoBehaviour
     [SerializeField] private Color startColor;
     [SerializeField] private float pause;
     private PlayerMovement playerMovement;
+    [Header("Checkpoints")]
+    [SerializeField] private Checkpoint startTrigger;
+    [SerializeField] private Checkpoint goHomeTrigger;
     private void Start()
     {
         mainLightMaterial.SetColor("_EmissionColor", startColor);
+        startTrigger.OnTrigger += OnStartTriggerEnter;
+        goHomeTrigger.OnTrigger += OnGoHomeTrigger;
+        goHomeTrigger.gameObject.SetActive(false);
         timerText.text = $"0:{waveTime}";
         jokes.Add(new(5, "joke joke joke", "Joke title!"));
         jokes.Add(new(10, "joka joka joka", "Joke tutel!"));
@@ -35,6 +41,23 @@ public class MainAction : MonoBehaviour
         jokes.Add(new(5, "joka joka joka", "Joke tutturu!"));
         jokes.Add(new(15, "joka joka joka", "Joke tutellya!"));
     }
+    #region Triggers
+    private void OnStartTriggerEnter(Collider other)
+    {
+        var plMovement = other.gameObject.GetComponent<PlayerMovement>();
+        if (plMovement == null) return;
+        SetPlayerMovement(plMovement);
+        plMovement.BanWalking();
+        plMovement.MoveTo(new Vector3(0, plMovement.transform.position.y, 0));
+        Wave();
+    }
+    private void OnGoHomeTrigger(Collider other)
+    {
+        var plMovement = other.gameObject.GetComponent<PlayerMovement>();
+        if (plMovement == null) return;
+        Game.Instance.Buttons.LoadHomeScene();
+    }
+    #endregion
     public void SetPlayerMovement(PlayerMovement pm)
     {
         if (pm != null) playerMovement = pm;
@@ -63,6 +86,7 @@ public class MainAction : MonoBehaviour
     private void EndGame()
     {
         playerMovement.AllowWalking();
+        goHomeTrigger.gameObject.SetActive(true);
         if (firstJoke)
             Destroy(firstJoke.gameObject);
         if (secondJoke)

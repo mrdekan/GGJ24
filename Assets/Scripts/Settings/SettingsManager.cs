@@ -10,7 +10,7 @@ public class SettingsManager : MonoBehaviour
     public event ValueChanged OnVSyncChange;
     private void Start()
     {
-        Application.targetFrameRate = -1;
+        Application.targetFrameRate = 120;
         OnVSyncChange += ApplyVSync;
     }
     private void ApplyVSync(bool value)

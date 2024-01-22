@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class Game
 {
     private static Game instance;
@@ -8,6 +10,8 @@ public class Game
     public PoolManager Pool { get; private set; }
     public MainAction Main { get; private set; }
     public ComediansManager Comedians { get; private set; }
+    public ButtonManager Buttons { get; private set; }
+    public GameObject Player { get; private set; }
     private Game()
     {
 
@@ -20,7 +24,7 @@ public class Game
             return instance;
         }
     }
-    public void SetManagers(SettingsManager settingsManager, MusicManager musicManager, PauseManager pauseManager, UIManager uIManager, PoolManager poolManager, MainAction main, ComediansManager comedianManager)
+    public void SetManagers(SettingsManager settingsManager, MusicManager musicManager, PauseManager pauseManager, UIManager uIManager, PoolManager poolManager, MainAction main, ComediansManager comedianManager, ButtonManager buttonManager, GameObject player)
     {
         Settings = settingsManager;
         Music = musicManager;
@@ -29,5 +33,7 @@ public class Game
         Pool = poolManager;
         Main = main;
         Comedians = comedianManager;
+        Buttons = buttonManager;
+        Player = player;
     }
 }

@@ -16,17 +16,19 @@ public class MouseLook : MonoBehaviour
     public float _maxVer = 45f;
 
     private float _rotationX = 0;
-
+    private bool canRotate = true;
     private void Start()
     {
         Rigidbody body = GetComponent<Rigidbody>();
         if (body != null)
             body.freezeRotation = true;
     }
+    public void BanRotation() => canRotate = false;
+    public void AllowRotation() => canRotate = true;
 
     private void Update()
     {
-        if (!Game.Instance.Pause.IsPaused)
+        if (!Game.Instance.Pause.IsPaused && canRotate)
         {
             if (_axes == RotationAxes.XandY)
             {

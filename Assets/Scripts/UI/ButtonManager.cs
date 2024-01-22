@@ -17,6 +17,7 @@ public class ButtonManager : MonoBehaviour
     public void Quit() => StartCoroutine(ActionAfterSound(CloseTheGame));
     public void Play() => StartCoroutine(ActionAfterSound(EnterTheGame));
     public void LeaveToMenu() => StartCoroutine(ActionAfterSound(BackToMenu));
+    public void LoadHomeScene() => _sceneLoader.LoadScene(2);
     public void ApplySettings()
     {
         Click();
@@ -63,7 +64,7 @@ public class ButtonManager : MonoBehaviour
         Game.Instance.Settings.RestoreSettings();
         _settingsPanel.SetActive(false);
     }
-    private void EnterTheGame() => _sceneLoader.LoadScene(1);
+    private void EnterTheGame() => _sceneLoader.LoadScene(2);
     private void BackToMenu() => _sceneLoader.LoadScene(0);
     private void OpenSettingsPanel() => _settingsPanel.SetActive(true);
 }

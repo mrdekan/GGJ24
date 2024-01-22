@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Outline))]
 public class JokeTable : MonoBehaviour, IInteractable
 {
     [SerializeField] private TextMeshProUGUI title;
@@ -10,10 +10,15 @@ public class JokeTable : MonoBehaviour, IInteractable
     [SerializeField] private Joke _joke;
     [SerializeField] private List<AudioClip> _clips = new();
     private AudioSource _audio;
+    private Outline _outline;
+    [Range(0, 10)]
+    [SerializeField] private float outlineWidth = 10;
     private bool isInteracted = false;
     private void Start()
     {
         _audio = GetComponent<AudioSource>();
+        _outline = GetComponent<Outline>();
+        _outline.OutlineWidth = 0;
     }
     public void SetInfo(Joke joke)
     {
@@ -25,6 +30,10 @@ public class JokeTable : MonoBehaviour, IInteractable
     {
         if (!isInteracted)
             StartCoroutine(Play());
+    }
+    public void SetOutline(bool state)
+    {
+        _outline.OutlineWidth = state ? outlineWidth : 0;
     }
     private IEnumerator Play()
     {
