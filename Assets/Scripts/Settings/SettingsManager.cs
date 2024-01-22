@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Settings;
+using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
     public GameSettings GameSettings { get; private set; }
     public delegate void VolumeChange(float volume);
     public delegate void ValueChanged(bool value);
+    public Languages Language { get => GameSettings.Language ?? Languages.En; }
     public event VolumeChange OnEffectsVolumeChange;
     public event VolumeChange OnMusicVolumeChange;
     public event ValueChanged OnVSyncChange;

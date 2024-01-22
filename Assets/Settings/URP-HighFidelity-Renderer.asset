@@ -18,9 +18,9 @@ MonoBehaviour:
     Downsample: 0
     AfterOpaque: 0
     Source: 1
-    NormalSamples: 1
-    Intensity: 1.03
-    DirectLightingStrength: 0.295
+    NormalSamples: 2
+    Intensity: 0.64
+    DirectLightingStrength: 0.234
     Radius: 0.1
     Samples: 0
     BlurQuality: 0

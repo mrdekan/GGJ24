@@ -11,11 +11,14 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private ComediansManager comedianManager;
     [SerializeField] private ButtonManager buttonManager;
     [SerializeField] private GameObject player;
+    [SerializeField] private JokesManager jokesManager;
     private void Awake()
     {
         settingsManager.LoadSettings();
+        if (jokesManager == null)
+            jokesManager = FindAnyObjectByType<JokesManager>();
         if (pauseManager && uiManager)
             pauseManager.OnPauseChange += uiManager.SetPausePanel;
-        Game.Instance.SetManagers(settingsManager, musicManager, pauseManager, uiManager, poolManager, mainAction, comedianManager, buttonManager, player);
+        Game.Instance.SetManagers(settingsManager, musicManager, pauseManager, uiManager, poolManager, mainAction, comedianManager, buttonManager, player, jokesManager);
     }
 }

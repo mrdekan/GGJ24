@@ -8,6 +8,7 @@ public class PC : MonoBehaviour, IInteractable
     [SerializeField] private GameObject monitorUI;
     [SerializeField] private AudioClip _startSound;
     [SerializeField] private Monitor _monitor;
+    [SerializeField] private Printer _printer;
     private AudioSource _audio;
     private bool state = false;
     private void Start()
@@ -24,6 +25,7 @@ public class PC : MonoBehaviour, IInteractable
         if (state) _audio.Play();
         else _audio.Stop();
         _monitor.SetInteractable(state);
+        if (!state) _printer.Stop();
     }
 
     public void SetOutline(bool state)

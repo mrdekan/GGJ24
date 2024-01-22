@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -35,14 +36,23 @@ public class MainAction : MonoBehaviour
         goHomeTrigger.OnTrigger += OnGoHomeTrigger;
         goHomeTrigger.gameObject.SetActive(false);
         timerText.text = $"0:{waveTime}";
-        jokes.Add(new(5, "joke joke joke", "Joke title!"));
+        jokes = Game.Instance.Jokes.Jokes;
+        if (jokes == null)
+        {
+            jokes = new();
+            for (int i = 0; i < 20; i++)
+            {
+                jokes.Add(new(5, "joke joke joke", "Joke title!"));
+            }
+        }
+        /*jokes.Add(new(5, "joke joke joke", "Joke title!"));
         jokes.Add(new(10, "joka joka joka", "Joke tutel!"));
         jokes.Add(new(3, "joka joka joka", "Joke tutelki!"));
         jokes.Add(new(5, "joka joka joka", "Joke tutturu!"));
-        jokes.Add(new(15, "joka joka joka", "Joke tutellya!"));
+        jokes.Add(new(15, "joka joka joka", "Joke tutellya!"));*/
     }
     #region Triggers
-    private void OnStartTriggerEnter(Collider other)
+    private void OnStartTriggerEnter(Collider other, Action callback)
     {
         var plMovement = other.gameObject.GetComponent<PlayerMovement>();
         if (plMovement == null) return;
@@ -50,12 +60,14 @@ public class MainAction : MonoBehaviour
         plMovement.BanWalking();
         plMovement.MoveTo(new Vector3(0, plMovement.transform.position.y, 0));
         Wave();
+        callback();
     }
-    private void OnGoHomeTrigger(Collider other)
+    private void OnGoHomeTrigger(Collider other, Action callback)
     {
         var plMovement = other.gameObject.GetComponent<PlayerMovement>();
         if (plMovement == null) return;
         Game.Instance.Buttons.LoadHomeScene();
+        callback();
     }
     #endregion
     public void SetPlayerMovement(PlayerMovement pm)
@@ -117,7 +129,7 @@ public class MainAction : MonoBehaviour
     }
     private Joke GetNextJoke()
     {
-        var joke = jokes[Random.Range(0, jokes.Count)];
+        var joke = jokes[UnityEngine.Random.Range(0, jokes.Count)];
         jokes.Remove(joke);
         return joke;
     }

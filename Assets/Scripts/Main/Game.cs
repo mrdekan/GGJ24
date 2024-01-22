@@ -12,6 +12,7 @@ public class Game
     public ComediansManager Comedians { get; private set; }
     public ButtonManager Buttons { get; private set; }
     public GameObject Player { get; private set; }
+    public JokesManager Jokes { get; private set; }
     private Game()
     {
 
@@ -24,7 +25,7 @@ public class Game
             return instance;
         }
     }
-    public void SetManagers(SettingsManager settingsManager, MusicManager musicManager, PauseManager pauseManager, UIManager uIManager, PoolManager poolManager, MainAction main, ComediansManager comedianManager, ButtonManager buttonManager, GameObject player)
+    public void SetManagers(SettingsManager settingsManager, MusicManager musicManager, PauseManager pauseManager, UIManager uIManager, PoolManager poolManager, MainAction main, ComediansManager comedianManager, ButtonManager buttonManager, GameObject player, JokesManager jokesManager)
     {
         Settings = settingsManager;
         Music = musicManager;
@@ -35,5 +36,6 @@ public class Game
         Comedians = comedianManager;
         Buttons = buttonManager;
         Player = player;
+        Jokes = jokesManager;
     }
 }
