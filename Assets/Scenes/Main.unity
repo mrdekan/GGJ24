@@ -1903,6 +1903,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pausePanel: {fileID: 585476573}
+  _subtitles: {fileID: 0}
+  _subtitlesTimer: 0
 --- !u!1 &1478023284 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1694164980609627607, guid: cc7ccd156f1013a48b047023a3137c2d,
@@ -1968,6 +1970,8 @@ MonoBehaviour:
   comedianManager: {fileID: 1553382061}
   buttonManager: {fileID: 674211062}
   player: {fileID: 0}
+  jokesManager: {fileID: 0}
+  progressManager: {fileID: 0}
 --- !u!1 &1550343748
 GameObject:
   m_ObjectHideFlags: 0
