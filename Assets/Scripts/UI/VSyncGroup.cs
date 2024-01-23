@@ -4,8 +4,6 @@ using UnityEngine.UI;
 public class VSyncGroup : MonoBehaviour
 {
     [SerializeField] private Toggle toggle;
-    public delegate void ToggleChanged(bool state);
-    public event ToggleChanged OnToggleChanged;
     private void Start()
     {
         toggle.isOn = Game.Instance.Settings.GameSettings.VSync ?? false;

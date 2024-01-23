@@ -42,7 +42,7 @@ public class MainAction : MonoBehaviour
             jokes = new();
             for (int i = 0; i < 20; i++)
             {
-                jokes.Add(new(5, "joke joke joke", "Joke title!"));
+                jokes.Add(new(JokeRarity.Default, "joke joke joke", "Joke title!"));
             }
         }
         /*jokes.Add(new(5, "joke joke joke", "Joke title!"));

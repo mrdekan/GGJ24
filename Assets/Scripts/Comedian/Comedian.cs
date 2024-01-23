@@ -7,12 +7,12 @@ public class Comedian : MonoBehaviour
 
     public bool TellJoke(Joke joke)
     {
-        if (Random.value * 100 <= joke.FunLvl)
+        if (Random.value * 100 <= (int)joke.Rarity)
         {
             _particles.Play();
             return true;
         }
-        funScale += joke.FunLvl;
+        funScale += (int)joke.Rarity;
         if (Random.value * 100 <= funScale)
         {
             _particles.Play();

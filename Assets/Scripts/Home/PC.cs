@@ -19,6 +19,7 @@ public class PC : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
+        if (Game.Instance.Pause.IsPaused) return;
         state = !state;
         monitorUI.SetActive(state);
         Game.Instance.Music.PlayShortSound(_startSound);

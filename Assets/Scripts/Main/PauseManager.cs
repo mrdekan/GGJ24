@@ -6,6 +6,7 @@ public class PauseManager : MonoBehaviour
     public bool IsPaused { get; private set; } = false;
     public delegate void PauseChange(bool isPaused);
     public event PauseChange OnPauseChange;
+    private bool wasCursorVisible = false;
     private void Awake()
     {
         Time.timeScale = 1;
@@ -17,8 +18,12 @@ public class PauseManager : MonoBehaviour
     }
     public void SetPause(bool isPaused)
     {
-        Cursor.visible = isPaused;
-        Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        if (isPaused) wasCursorVisible = Cursor.lockState != CursorLockMode.Locked;
+        if (isPaused || !isPaused && !wasCursorVisible)
+        {
+            Cursor.visible = isPaused;
+            Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+        }
         IsPaused = isPaused;
         OnPauseChange?.Invoke(IsPaused);
         Time.timeScale = IsPaused ? 0 : 1;
