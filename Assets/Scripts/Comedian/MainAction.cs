@@ -36,7 +36,7 @@ public class MainAction : MonoBehaviour
         goHomeTrigger.OnTrigger += OnGoHomeTrigger;
         goHomeTrigger.gameObject.SetActive(false);
         timerText.text = $"0:{waveTime}";
-        jokes = Game.Instance.Jokes.Jokes;
+        jokes = Game.Instance.Jokes.SelectedJokes;
         if (jokes == null)
         {
             jokes = new();

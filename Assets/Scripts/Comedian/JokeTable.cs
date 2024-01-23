@@ -28,7 +28,7 @@ public class JokeTable : MonoBehaviour, IInteractable
     }
     public void Interact()
     {
-        if (!isInteracted)
+        if (!isInteracted && !Game.Instance.Pause.IsPaused)
             StartCoroutine(Play());
     }
     public void SetOutline(bool state)

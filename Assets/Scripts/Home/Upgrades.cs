@@ -1,5 +1,7 @@
 public enum Upgrades
 {
     PC,
-    Monitor
+    Monitor,
+    Jokes,
+    InputDevices
 }

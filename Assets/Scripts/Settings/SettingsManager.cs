@@ -15,6 +15,11 @@ public class SettingsManager : MonoBehaviour
         Application.targetFrameRate = 120;
         OnVSyncChange += ApplyVSync;
     }
+    public string CorrectLanguageString(string eng, string ua)
+    {
+        if (Language == Languages.Ua) return ua;
+        return eng;
+    }
     private void ApplyVSync(bool value)
     {
         QualitySettings.vSyncCount = value ? 1 : 0;

@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator MoveToCoroutine(Vector3 targetPosition)
     {
 
-        while ((transform.position - targetPosition).magnitude > 0.005)
+        while ((transform.position - targetPosition).magnitude > 0.01)
         {
             Vector3 position = targetPosition - transform.position;
             position = _speed / 2 * Time.deltaTime * position.normalized;

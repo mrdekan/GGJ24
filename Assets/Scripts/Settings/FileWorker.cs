@@ -61,7 +61,7 @@ public static class FileWorker
         }
         else
         {
-            var jokes = GlobalJokesList.GetInitialJokes();
+            var jokes = new List<Joke>();
             SaveSelectedJokes(jokes);
             return jokes;
         }

@@ -29,9 +29,13 @@ public class PCScreen : MonoBehaviour
         }
         if (userName.text == "") userName.text = "Professional";
     }
+    private void Start()
+    {
+        OpenTextEditor();
+    }
     private void SetUserJokes(List<Joke> jokes)
     {
-        _userJokes = jokes;
+        _userJokes = new(jokes);
         foreach (Joke joke in jokes)
         {
             if (SelectedJokes != null && !SelectedJokes.Contains(joke))
@@ -61,7 +65,7 @@ public class PCScreen : MonoBehaviour
     }
     private void SetSelectedJokes(List<Joke> jokes)
     {
-        SelectedJokes = jokes;
+        SelectedJokes = new(jokes);
         foreach (Joke joke in jokes)
             Instantiate(jokePrefab, selectedJokesList).SetInfo(joke, true, this);
     }
@@ -86,6 +90,8 @@ public class PCScreen : MonoBehaviour
     }
     public void OpenTextEditor()
     {
+        if (_userJokes.Count != Game.Instance.Jokes.UserJokes.Count)
+            SetJokes(Game.Instance.Jokes.UserJokes, Game.Instance.Jokes.SelectedJokes);
         textEditor.SetActive(true);
         shop.SetActive(false);
     }

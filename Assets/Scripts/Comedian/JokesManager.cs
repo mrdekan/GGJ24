@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class JokesManager : MonoBehaviour
 {
-    public List<Joke> Jokes { get; private set; }
-    public bool HasJokes => Jokes != null && Jokes.Count > 0;
+    public bool HasJokes => SelectedJokes != null && SelectedJokes.Count > 0;
     public List<Joke> UserJokes { get; private set; }
     public List<Joke> SelectedJokes { get; private set; }
     private void Start()
@@ -14,11 +13,16 @@ public class JokesManager : MonoBehaviour
     public void LoadJokes()
     {
         UserJokes = FileWorker.LoadUserJokes();
-        SelectedJokes = FileWorker.LoadSelectedJokes();
+        SelectedJokes = new();
+    }
+    public void AddUserJokes(List<Joke> newJokes)
+    {
+        UserJokes.AddRange(newJokes);
+        FileWorker.SaveUserJokes(UserJokes);
     }
     public void SetJokes(List<Joke> jokes)
     {
-        Jokes = jokes;
-        FileWorker.SaveSelectedJokes(jokes);
+        SelectedJokes = jokes;
+        FileWorker.SaveSelectedJokes(SelectedJokes);
     }
 }
