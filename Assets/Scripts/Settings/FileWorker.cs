@@ -9,6 +9,7 @@ public static class FileWorker
     private const string SELECTED_JOKES_FILE_PATH = "selectedJokes.bin";
     private const string USER_JOKES_FILE_PATH = "jokesInvent.bin";
     private const string PROGRESS_FILE_PATH = "progress.bin";
+    public static bool HasSettingsFile() => File.Exists(SETTINGS_FILE_PATH);
     public static GameSettings LoadSettings()
     {
         if (File.Exists(SETTINGS_FILE_PATH))

@@ -564,6 +564,7 @@ MonoBehaviour:
   title: {fileID: 1868594554433721089}
   description: {fileID: 8401206565510154413}
   priceOnButton: {fileID: 5097155035573151708}
+  button: {fileID: 1831514902461195880}
   engTitle: 
   uaTitle: 
   engDescription: 

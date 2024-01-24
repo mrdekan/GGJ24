@@ -15,6 +15,11 @@ public class SettingsManager : MonoBehaviour
         Application.targetFrameRate = 120;
         OnVSyncChange += ApplyVSync;
     }
+    public void SetLanguage(Languages lang)
+    {
+        GameSettings.Language = lang;
+        SaveSettings();
+    }
     public string CorrectLanguageString(string eng, string ua)
     {
         if (Language == Languages.Ua) return ua;
