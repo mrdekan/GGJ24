@@ -29,6 +29,7 @@ public class MainAction : MonoBehaviour
     [Header("Checkpoints")]
     [SerializeField] private Checkpoint startTrigger;
     [SerializeField] private Checkpoint goHomeTrigger;
+    [SerializeField] private List<int> rewards = new();
     private void Start()
     {
         mainLightMaterial.SetColor("_EmissionColor", startColor);
@@ -54,6 +55,7 @@ public class MainAction : MonoBehaviour
     #region Triggers
     private void OnStartTriggerEnter(Collider other, Action callback)
     {
+        if (currentWave > 1) return;
         var plMovement = other.gameObject.GetComponent<PlayerMovement>();
         if (plMovement == null) return;
         SetPlayerMovement(plMovement);
@@ -79,9 +81,14 @@ public class MainAction : MonoBehaviour
         StopAllCoroutines();
         mainLightMaterial.SetColor("_EmissionColor", winColor);
         if (currentWave <= wavesCount)
+        {
             StartCoroutine(WaveAfterWin());
+        }
         else
+        {
+            Game.Instance.Progress.AddMoney(rewards[currentWave - 2]);
             EndGame();
+        }
     }
     private IEnumerator WaveAfterWin()
     {

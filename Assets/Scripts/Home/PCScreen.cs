@@ -85,17 +85,21 @@ public class PCScreen : MonoBehaviour
         foreach (Joke joke in jokes)
             Instantiate(jokePrefab, selectedJokesList).SetInfo(joke, true, this);
     }
-    public void SetJokes(List<Joke> userJokes, List<Joke> selectedJokes)
+    public void SetJokes(List<Joke> userJokes, List<Joke> selectedJokes, bool redraw = true)
     {
-        foreach (Transform child in selectedJokesList)
+        if (redraw)
         {
-            Destroy(child.gameObject);
+            foreach (Transform child in selectedJokesList)
+            {
+                Destroy(child.gameObject);
+            }
         }
         foreach (Transform child in userJokesList)
         {
             Destroy(child.gameObject);
         }
-        SetSelectedJokes(selectedJokes);
+        if (redraw)
+            SetSelectedJokes(selectedJokes);
         SetUserJokes(userJokes);
         UpdateTitles();
     }
@@ -107,7 +111,7 @@ public class PCScreen : MonoBehaviour
     public void OpenTextEditor()
     {
         if (_userJokes.Count != Game.Instance.Jokes.UserJokes.Count)
-            SetJokes(Game.Instance.Jokes.UserJokes, Game.Instance.Jokes.SelectedJokes);
+            SetJokes(Game.Instance.Jokes.UserJokes, Game.Instance.Jokes.SelectedJokes, false);
         textEditor.SetActive(true);
         shop.SetActive(false);
     }

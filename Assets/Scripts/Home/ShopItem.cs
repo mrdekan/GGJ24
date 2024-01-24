@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,10 +20,12 @@ public class ShopItem : MonoBehaviour
     {
         title.text = Game.Instance.Settings.CorrectLanguageString(engTitle, uaTitle);
         description.text = Game.Instance.Settings.CorrectLanguageString(engDescription, uaDescription);
-        if (product == Upgrades.Jokes && Game.Instance.Progress.UnlockedUpgrades.Contains(Upgrades.Monitor))
+        if (product == Upgrades.Jokes && Game.Instance.Progress.Has(Upgrades.Monitor))
             price *= 0.7f;
+        else if (product != Upgrades.Jokes && Game.Instance.Progress.Has(Upgrades.Headphones))
+            price *= 0.9f;
         priceOnButton.text = $"${price}k";
-        if (product != Upgrades.Jokes && Game.Instance.Progress.UnlockedUpgrades.Contains(product))
+        if (product != Upgrades.Jokes && Game.Instance.Progress.Has(product))
         {
             button.interactable = false;
             priceOnButton.text = Game.Instance.Settings.CorrectLanguageString("Already bought", "Вже куплено");

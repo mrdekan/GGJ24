@@ -11,6 +11,10 @@ public class UpgradesManager : MonoBehaviour
     [SerializeField] private GameObject newPC;
     [SerializeField] private GameObject oldInputDevice;
     [SerializeField] private GameObject newInputDevices;
+    [SerializeField] private GameObject headPhones;
+    [SerializeField] private GameObject oldChair;
+    [SerializeField] private GameObject newChair;
+
     private void Start()
     {
         UpdateAllFurniture();
@@ -32,5 +36,10 @@ public class UpgradesManager : MonoBehaviour
         bool inputDevices = HasUpgrade(Upgrades.InputDevices);
         oldInputDevice.SetActive(!inputDevices);
         newInputDevices.SetActive(inputDevices);
+        bool headphones = HasUpgrade(Upgrades.PC);
+        headPhones.SetActive(headphones);
+        bool chair = HasUpgrade(Upgrades.Chair);
+        oldChair.SetActive(!chair);
+        newChair.SetActive(chair);
     }
 }

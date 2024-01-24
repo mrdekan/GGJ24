@@ -16,7 +16,7 @@ public class JokesPaper : MonoBehaviour, IInteractable
     public void Interact()
     {
         if (Game.Instance.Pause.IsPaused) return;
-        Game.Instance.Jokes.SetJokes(_jokes);
+        //Game.Instance.Jokes.SetJokes(_jokes);
         Destroy(gameObject);
     }
 

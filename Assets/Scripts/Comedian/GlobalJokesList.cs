@@ -56,17 +56,18 @@ public static class GlobalJokesList
         foreach (Joke joke in jokes)
             _jokes.Remove(joke);
     }
-    public static List<Joke> GenerateNewJokes(List<Joke> current, bool increaseLegendChance)
+    public static List<Joke> GenerateNewJokes(List<Joke> current, bool increaseLegendChance, bool extraJoke)
     {
         var def = RemoveListFromList(_defJokes, current);
         var rare = RemoveListFromList(_rareJokes, current);
         var epic = RemoveListFromList(_epicJokes, current);
         var leg = RemoveListFromList(_legendJokes, current);
-
+        int jokesCnt = newJokesCount;
+        if (extraJoke) jokesCnt++;
         List<Joke> jokes = new List<Joke>();
         int tempLegChance = increaseLegendChance ? increasedLegendChance : legendChance;
 
-        for (int i = 0; i < newJokesCount; i++)
+        for (int i = 0; i < jokesCnt; i++)
         {
             int rand = Random.Range(0, 100);
 

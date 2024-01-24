@@ -458,6 +458,7 @@ MonoBehaviour:
   pause: 2
   startTrigger: {fileID: 174384661}
   goHomeTrigger: {fileID: 633787623}
+  rewards: e8030000c409000010270000
 --- !u!1 &283682189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1905,6 +1906,7 @@ MonoBehaviour:
   _pausePanel: {fileID: 585476573}
   _subtitles: {fileID: 0}
   _subtitlesTimer: 0
+  _printDelay: 0.05
 --- !u!1 &1478023284 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1694164980609627607, guid: cc7ccd156f1013a48b047023a3137c2d,
@@ -1971,7 +1973,7 @@ MonoBehaviour:
   buttonManager: {fileID: 674211062}
   player: {fileID: 0}
   jokesManager: {fileID: 0}
-  progressManager: {fileID: 0}
+  progressManager: {fileID: 1942162534}
 --- !u!1 &1550343748
 GameObject:
   m_ObjectHideFlags: 0
@@ -7191,6 +7193,50 @@ MonoBehaviour:
   _shortSoundsCapacity: 10
   _shortSoundPrefab: {fileID: 3934851972939148175, guid: cfb8d53d2ca79f049b87682a4fd40f14,
     type: 3}
+--- !u!1 &1942162532
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1942162533}
+  - component: {fileID: 1942162534}
+  m_Layer: 0
+  m_Name: ProgressManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1942162533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942162532}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2048547408}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1942162534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942162532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd40b23c2ae1bc14a9a9e77db659b019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1954363508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3664184964044321716, guid: 7a29915cc85d42a498120741f2abc8ad,
@@ -7593,6 +7639,7 @@ Transform:
   - {fileID: 1903575393}
   - {fileID: 283682191}
   - {fileID: 278717639}
+  - {fileID: 1942162533}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2099297662 stripped

@@ -3,5 +3,7 @@ public enum Upgrades
     PC,
     Monitor,
     Jokes,
-    InputDevices
+    InputDevices,
+    Chair,
+    Headphones
 }
