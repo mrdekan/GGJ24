@@ -8,6 +8,8 @@ public class ProgressManager : MonoBehaviour
     public IEnumerable<Upgrades> UnlockedUpgrades => _progress?.UnlockedUpgrades ?? new List<Upgrades>();
     private ProgressSaveModel _progress;
     private UpgradesManager _upgradesManager;
+    public delegate void BalanceUpdated();
+    public event BalanceUpdated OnBalanceUpdate;
     private void Start()
     {
         _upgradesManager = GetComponent<UpgradesManager>();
@@ -31,6 +33,7 @@ public class ProgressManager : MonoBehaviour
             return;
         }
         _progress.Balance -= (int)(price * 1000);
+        OnBalanceUpdate?.Invoke();
         _progress.UnlockedUpgrades.Add(upgrade);
         _upgradesManager?.UpdateAllFurniture();
         Save();

@@ -10,16 +10,7 @@ public static class GlobalJokesList
     private static int newJokesCount = 5;
     private static readonly List<Joke> _jokes = new()
     {
-        new(JokeRarity.Default, "joke joke joke", "Joke title!"),
-        new(JokeRarity.Default, "joka joka joka", "Joke tutellya!"),
-        new(JokeRarity.Default, "jaba jaba jaba", "Jose tutellya!"),
-        new(JokeRarity.Default, "joka jaba joka", "Jobe tutellya!"),
-        new(JokeRarity.Default, "joka joka jaba", "Tuta tutellya!"),
-        new(JokeRarity.Default, "jaba joka joka", "Jabab tutellya!"),
-        new(JokeRarity.Default, "joka jaba jaba", "Joba tutellya!"),
-        new(JokeRarity.Legendary, "joka joka joka", "Joke tutel!"),
-        new(JokeRarity.Rare, "joka joka joka", "Joke tutelki!"),
-        new(JokeRarity.Epic, "joka joka joka", "Joke tutturu!"),
+        new(JokeRarity.Default, "111111111", "222222222222!")
     };
     private static readonly List<Joke> _defJokes = new()
     {
@@ -72,49 +63,57 @@ public static class GlobalJokesList
         var epic = RemoveListFromList(_epicJokes, current);
         var leg = RemoveListFromList(_legendJokes, current);
 
-        List<Joke> jokes = new();
+        List<Joke> jokes = new List<Joke>();
         int tempLegChance = increaseLegendChance ? increasedLegendChance : legendChance;
+
         for (int i = 0; i < newJokesCount; i++)
         {
             int rand = Random.Range(0, 100);
+
             if (rand < tempLegChance)
             {
-                if (leg.Count > 0)
-                    jokes.Add(leg[Random.Range(0, leg.Count)]);
-                else if (epic.Count > 0)
-                    jokes.Add(epic[Random.Range(0, epic.Count)]);
-                else if (rare.Count > 0)
-                    jokes.Add(rare[Random.Range(0, rare.Count)]);
-                else if (def.Count > 0)
-                    jokes.Add(def[Random.Range(0, def.Count)]);
-                else break;
+                Joke jokeToAdd = PopRandom(leg) ?? PopRandom(epic) ?? PopRandom(rare) ?? PopRandom(def);
+                if (jokeToAdd != null)
+                    jokes.Add(jokeToAdd);
+                else
+                    break;
             }
             else if (rand < tempLegChance + epicChance)
             {
-                if (epic.Count > 0)
-                    jokes.Add(epic[Random.Range(0, epic.Count)]);
-                else if (rare.Count > 0)
-                    jokes.Add(rare[Random.Range(0, rare.Count)]);
-                else if (def.Count > 0)
-                    jokes.Add(def[Random.Range(0, def.Count)]);
-                else break;
+                Joke jokeToAdd = PopRandom(epic) ?? PopRandom(rare) ?? PopRandom(def) ?? PopRandom(leg);
+                if (jokeToAdd != null)
+                    jokes.Add(jokeToAdd);
+                else
+                    break;
             }
             else if (rand < tempLegChance + epicChance + rareChance)
             {
-                if (rare.Count > 0)
-                    jokes.Add(rare[Random.Range(0, rare.Count)]);
-                else if (def.Count > 0)
-                    jokes.Add(def[Random.Range(0, def.Count)]);
-                else break;
+                Joke jokeToAdd = PopRandom(rare) ?? PopRandom(def) ?? PopRandom(epic) ?? PopRandom(leg);
+                if (jokeToAdd != null)
+                    jokes.Add(jokeToAdd);
+                else
+                    break;
             }
             else
             {
-                if (def.Count > 0)
-                    jokes.Add(def[Random.Range(0, def.Count)]);
-                else break;
+                Joke jokeToAdd = PopRandom(def) ?? PopRandom(rare) ?? PopRandom(epic) ?? PopRandom(leg);
+                if (jokeToAdd != null)
+                    jokes.Add(jokeToAdd);
+                else
+                    break;
             }
         }
         return jokes;
+    }
+    private static Joke PopRandom(List<Joke> jokes)
+    {
+        if (jokes == null || jokes.Count == 0)
+            return null;
+
+        int index = Random.Range(0, jokes.Count);
+        Joke poppedJoke = jokes[index];
+        jokes.RemoveAt(index);
+        return poppedJoke;
     }
     private static List<Joke> RemoveListFromList(List<Joke> a, List<Joke> b)
     {

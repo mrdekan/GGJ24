@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,8 @@ public class JokePanel : MonoBehaviour
     [SerializeField] private TextMeshProUGUI content;
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private Button button;
+    [SerializeField] private List<Image> funLvlImages;
+    [SerializeField] private List<Color> funLvlColors;
     public Joke JokeInfo { get; private set; }
     private PCScreen _screen;
     private bool _isSelected;
@@ -20,6 +23,16 @@ public class JokePanel : MonoBehaviour
         _screen = screen;
         _isSelected = isSelected;
         button.onClick.AddListener(delegate { HandleClick(); });
+        int lvl = 1;
+        switch (joke.Rarity)
+        {
+            case JokeRarity.Default: lvl = 1; break;
+            case JokeRarity.Rare: lvl = 2; break;
+            case JokeRarity.Epic: lvl = 3; break;
+            case JokeRarity.Legendary: lvl = 4; break;
+        }
+        for (int i = 0; i < lvl; i++)
+            funLvlImages[i].color = funLvlColors[i];
     }
     private void HandleClick()
     {

@@ -6,6 +6,8 @@ public class JokesManager : MonoBehaviour
     public bool HasJokes => SelectedJokes != null && SelectedJokes.Count > 0;
     public List<Joke> UserJokes { get; private set; }
     public List<Joke> SelectedJokes { get; private set; }
+    public delegate void NewJokes(List<Joke> jokes);
+    public event NewJokes AddedJokes;
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -18,6 +20,7 @@ public class JokesManager : MonoBehaviour
     public void AddUserJokes(List<Joke> newJokes)
     {
         UserJokes.AddRange(newJokes);
+        AddedJokes?.Invoke(newJokes);
         FileWorker.SaveUserJokes(UserJokes);
     }
     public void SetJokes(List<Joke> jokes)

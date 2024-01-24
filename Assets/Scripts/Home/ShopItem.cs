@@ -30,5 +30,13 @@ public class ShopItem : MonoBehaviour
             priceOnButton.text = Game.Instance.Settings.CorrectLanguageString("Already bought", "Вже куплено");
         }
     }
-    public void Buy() => Game.Instance.Progress.Buy(product, price);
+    public void Buy()
+    {
+        Game.Instance.Progress.Buy(product, price);
+        if (product != Upgrades.Jokes)
+        {
+            button.interactable = false;
+            priceOnButton.text = Game.Instance.Settings.CorrectLanguageString("Already bought", "Вже куплено");
+        }
+    }
 }

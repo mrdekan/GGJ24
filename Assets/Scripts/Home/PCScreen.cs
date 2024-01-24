@@ -14,6 +14,8 @@ public class PCScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI selectedJokesTitle;
     [SerializeField] private TextMeshProUGUI userName;
     [SerializeField] private TextMeshProUGUI balance;
+    [SerializeField] private GameObject newJokesPanel;
+    [SerializeField] private Transform newJokesParent;
     public List<Joke> SelectedJokes { get; private set; }
     private List<Joke> _userJokes;
     private void Awake()
@@ -28,6 +30,20 @@ public class PCScreen : MonoBehaviour
             userName.text = "Professional";
         }
         if (userName.text == "") userName.text = "Professional";
+        Game.Instance.Jokes.AddedJokes += HandleNewJokes;
+        Game.Instance.Progress.OnBalanceUpdate += HandleBalance;
+    }
+    private void HandleNewJokes(List<Joke> newJokes)
+    {
+        foreach (Transform child in newJokesParent)
+            Destroy(child.gameObject);
+        foreach (Joke joke in newJokes)
+            Instantiate(jokePrefab, newJokesParent).SetInfo(joke, false, this);
+        newJokesPanel.SetActive(true);
+    }
+    private void HandleBalance()
+    {
+        UpdateBalance();
     }
     private void Start()
     {
