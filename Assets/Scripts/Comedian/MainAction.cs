@@ -28,6 +28,7 @@ public class MainAction : MonoBehaviour
     private PlayerMovement playerMovement;
     [Header("Checkpoints")]
     [SerializeField] private Checkpoint startTrigger;
+    [SerializeField] private GameObject exitCollider;
     [SerializeField] private Checkpoint goHomeTrigger;
     [SerializeField] private List<int> rewards = new();
     [SerializeField] private List<int> funLvlsPerWave = new();
@@ -114,6 +115,7 @@ public class MainAction : MonoBehaviour
     {
         playerMovement.AllowWalking();
         goHomeTrigger.gameObject.SetActive(true);
+        exitCollider.SetActive(false);
         if (firstJoke)
             Destroy(firstJoke.gameObject);
         if (secondJoke)
