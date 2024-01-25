@@ -5,6 +5,10 @@ public class ComediansManager : MonoBehaviour
 {
     [SerializeField] private List<Comedian> _comedians = new();
 
+    public void SetComedianFunLvls(int funLvl)
+    {
+        foreach (Comedian co in _comedians) co.SetFunLvl(funLvl);
+    }
     public bool TellJoke(Joke joke)
     {
         bool res = false;

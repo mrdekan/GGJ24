@@ -30,6 +30,8 @@ public class MainAction : MonoBehaviour
     [SerializeField] private Checkpoint startTrigger;
     [SerializeField] private Checkpoint goHomeTrigger;
     [SerializeField] private List<int> rewards = new();
+    [SerializeField] private List<int> funLvlsPerWave = new();
+    [SerializeField] private int defeatPurchase = 200;
     private void Start()
     {
         mainLightMaterial.SetColor("_EmissionColor", startColor);
@@ -103,6 +105,7 @@ public class MainAction : MonoBehaviour
     }
     public void Wave()
     {
+        Game.Instance.Comedians.SetComedianFunLvls(funLvlsPerWave[currentWave - 1]);
         StartCoroutine(Timer());
         UpdateJokes();
         currentWave++;
@@ -161,6 +164,7 @@ public class MainAction : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         mainLightMaterial.SetColor("_EmissionColor", defeatColor);
+        Game.Instance.Progress.PurchaseMoney(defeatPurchase, true);
         EndGame();
     }
 }

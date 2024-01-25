@@ -29,17 +29,30 @@ public class ProgressManager : MonoBehaviour
         _progress.Balance += money;
         Save();
     }
+    public void PurchaseMoney(int money, bool force = false)
+    {
+        if (money > Balance && !force) return;
+        else if (money > Balance && force)
+        {
+            _progress.Balance = 0;
+            Save();
+            return;
+        }
+        _progress.Balance -= money;
+        Save();
+    }
     public void Buy(Upgrades upgrade, float price)
     {
-        if (_progress.UnlockedUpgrades.Contains(upgrade)) return;
+        if (_progress.UnlockedUpgrades.Contains(upgrade) || price * 1000 > Balance) return;
         if (upgrade == Upgrades.Jokes)
         {
             Game.Instance.Jokes.AddUserJokes(GlobalJokesList.GenerateNewJokes(Game.Instance.Jokes.UserJokes, Has(Upgrades.InputDevices), Has(Upgrades.Chair)));
             _progress.Balance -= (int)((price * 1000) * (UnlockedUpgrades.Contains(Upgrades.Monitor) ? 0.7 : 1));
+            OnBalanceUpdate?.Invoke();
             Save();
             return;
         }
-        _progress.Balance -= (int)(price * 1000);
+        PurchaseMoney((int)(price * 1000));
         OnBalanceUpdate?.Invoke();
         _progress.UnlockedUpgrades.Add(upgrade);
         _upgradesManager?.UpdateAllFurniture();

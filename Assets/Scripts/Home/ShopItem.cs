@@ -33,6 +33,7 @@ public class ShopItem : MonoBehaviour
     }
     public void Buy()
     {
+        if (Game.Instance.Progress.Balance < price * 1000) return;
         Game.Instance.Progress.Buy(product, price);
         if (product != Upgrades.Jokes)
         {

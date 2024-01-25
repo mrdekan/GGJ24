@@ -14,13 +14,13 @@ public static class GlobalJokesList
     };
     private static readonly List<Joke> _defJokes = new()
     {
-        new(JokeRarity.Default, "joke joke joke", "Joke title!"),
-        new(JokeRarity.Default, "joka joka joka", "Joke tutellya!"),
-        new(JokeRarity.Default, "jaba jaba jaba", "Jose tutellya!"),
-        new(JokeRarity.Default, "joka jaba joka", "Jobe tutellya!"),
-        new(JokeRarity.Default, "joka joka jaba", "Tuta tutellya!"),
-        new(JokeRarity.Default, "jaba joka joka", "Jabab tutellya!"),
-        new(JokeRarity.Default, "joka jaba jaba", "Joba tutellya!"),
+        new(JokeRarity.Default, "joke\n joke\n joke", "Joke title!"),
+        new(JokeRarity.Default, "joka\n joka\n joka", "Joke tutellya!"),
+        new(JokeRarity.Default, "jaba\n jaba\n jaba", "Jose tutellya!"),
+        new(JokeRarity.Default, "joka\n jaba\n joka", "Jobe tutellya!"),
+        new(JokeRarity.Default, "joka\n joka\n jaba", "Tuta tutellya!"),
+        new(JokeRarity.Default, "jaba\n joka\n joka", "Jabab tutellya!"),
+        new(JokeRarity.Default, "joka\n jaba\n jaba", "Joba tutellya!"),
     };
     private static readonly List<Joke> _rareJokes = new()
     {

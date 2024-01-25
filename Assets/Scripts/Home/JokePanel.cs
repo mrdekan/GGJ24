@@ -14,7 +14,7 @@ public class JokePanel : MonoBehaviour
     public Joke JokeInfo { get; private set; }
     private PCScreen _screen;
     private bool _isSelected;
-    public void SetInfo(Joke joke, bool isSelected, PCScreen screen)
+    public void SetInfo(Joke joke, bool isSelected, PCScreen screen, bool hideButton = false)
     {
         JokeInfo = joke;
         title.text = joke.Title;
@@ -23,6 +23,7 @@ public class JokePanel : MonoBehaviour
         _screen = screen;
         _isSelected = isSelected;
         button.onClick.AddListener(delegate { HandleClick(); });
+        if (hideButton) button.gameObject.SetActive(false);
         int lvl = 1;
         switch (joke.Rarity)
         {

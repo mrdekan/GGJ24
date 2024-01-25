@@ -18,22 +18,22 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.94
+    m_Value: 0.56
   intensity:
     m_OverrideState: 1
-    m_Value: 1.28
+    m_Value: 0.38
   scatter:
     m_OverrideState: 0
-    m_Value: 0.7
+    m_Value: 0.652
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.887286, b: 0.7216981, a: 1}
   highQualityFiltering:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   downscale:
     m_OverrideState: 0
     m_Value: 0
@@ -94,6 +94,7 @@ MonoBehaviour:
   - {fileID: 5897709197903468196}
   - {fileID: 8010169905498200192}
   - {fileID: 1390626210205733445}
+  - {fileID: 5253000122619728520}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -146,28 +147,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a8e2b6826cf840aae193990ba9f2e, type: 3}
   m_Name: ShadowsMidtonesHighlights
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_Value: {x: 1, y: 1, z: 1, w: -0.7236268}
   midtones:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: 0.10462073}
   highlights:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1, z: 1, w: 0.22667827}
   shadowsStart:
     m_OverrideState: 0
     m_Value: 0
   shadowsEnd:
-    m_OverrideState: 0
-    m_Value: 0.3
-  highlightsStart:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.55
+  highlightsStart:
+    m_OverrideState: 1
+    m_Value: 0.42
   highlightsEnd:
     m_OverrideState: 0
     m_Value: 1
+--- !u!114 &5253000122619728520
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
+  m_Name: SplitToning
+  m_EditorClassIdentifier: 
+  active: 1
+  shadows:
+    m_OverrideState: 1
+    m_Value: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {r: 0.754717, g: 0.6855383, b: 0.6301175, a: 1}
+  balance:
+    m_OverrideState: 1
+    m_Value: -8.9
 --- !u!114 &5897709197903468196
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -192,9 +215,9 @@ MonoBehaviour:
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     m_OverrideState: 0
-    m_Value: -9
+    m_Value: 180
   saturation:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 5.3
 --- !u!114 &8010169905498200192
 MonoBehaviour:
@@ -210,8 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   lift:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 0.71578866, z: 0.8910643, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.99584275, z: 0.9842411, w: 0}
   gamma:
     m_OverrideState: 1
     m_Value: {x: 1, y: 0.9504089, z: 0.94726557, w: 0}

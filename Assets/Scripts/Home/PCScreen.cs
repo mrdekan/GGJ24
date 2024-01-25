@@ -38,7 +38,7 @@ public class PCScreen : MonoBehaviour
         foreach (Transform child in newJokesParent)
             Destroy(child.gameObject);
         foreach (Joke joke in newJokes)
-            Instantiate(jokePrefab, newJokesParent).SetInfo(joke, false, this);
+            Instantiate(jokePrefab, newJokesParent).SetInfo(joke, false, this, true);
         newJokesPanel.SetActive(true);
     }
     private void HandleBalance()
@@ -65,7 +65,7 @@ public class PCScreen : MonoBehaviour
     private void UpdateTitles()
     {
         userJokesTitle.text = $"All jokes ({_userJokes.Count - SelectedJokes.Count})";
-        selectedJokesTitle.text = $"Selected jokes ({SelectedJokes.Count}/20)";
+        selectedJokesTitle.text = $"Selected jokes ({SelectedJokes.Count}/{(Game.Instance.Progress.Has(Upgrades.PC) ? "25" : "20")})";
     }
     public void MoveToInventory(JokePanel joke)
     {
@@ -75,6 +75,7 @@ public class PCScreen : MonoBehaviour
     }
     public void MoveToSelected(JokePanel joke)
     {
+        if (SelectedJokes.Count >= (Game.Instance.Progress.Has(Upgrades.PC) ? 25 : 20)) return;
         joke.transform.SetParent(selectedJokesList);
         SelectedJokes.Add(joke.JokeInfo);
         UpdateTitles();
