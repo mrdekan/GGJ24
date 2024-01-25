@@ -68,6 +68,6 @@ public class Monitor : MonoBehaviour, IInteractable
     {
         ReleaseScreen();
         _printer.Print(_screen.SelectedJokes);
-        Game.Instance.Jokes.SetJokes(_screen.SelectedJokes);
+        FileWorker.SaveSelectedJokes(_screen.SelectedJokes);
     }
 }

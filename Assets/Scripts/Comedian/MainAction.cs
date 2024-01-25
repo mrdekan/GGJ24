@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -43,8 +44,12 @@ public class MainAction : MonoBehaviour
         jokes = Game.Instance.Jokes?.SelectedJokes ?? new()
         {
             new(JokeRarity.Rare, "joka joka joka", "Joke tutel!"),
-            new(JokeRarity.Rare, "joka joka joka", "Joke tutelki!"),
-            new(JokeRarity.Rare, "joka joka joka", "Joke tutturu!"),
+            new(JokeRarity.Legendary, "joka joka joka", "Joke tutelki!"),
+            new(JokeRarity.Legendary, "joka joka joka", "Joke tutturu!"),
+            new(JokeRarity.Legendary, "jaaaaaaaaaaa", "Joke tutturu!"),
+            new(JokeRarity.Legendary, "jssa joka joka", "Joke tutturu!"),
+            new(JokeRarity.Legendary, "joka josa joka", "Joke tutturu!"),
+            new(JokeRarity.Legendary, "jusa joka joka", "Joke tutturu!"),
         };
         if (jokes == null)
         {
@@ -146,7 +151,7 @@ public class MainAction : MonoBehaviour
     }
     private Joke GetNextJoke()
     {
-        var joke = jokes[UnityEngine.Random.Range(0, jokes.Count)];
+        var joke = jokes.First();
         jokes.Remove(joke);
         return joke;
     }

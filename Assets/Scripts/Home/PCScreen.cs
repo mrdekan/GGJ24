@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -52,7 +53,8 @@ public class PCScreen : MonoBehaviour
     private void SetUserJokes(List<Joke> jokes)
     {
         _userJokes = new(jokes);
-        foreach (Joke joke in jokes)
+        _userJokes = _userJokes.OrderByDescending(el => el.Rarity).ToList();
+        foreach (Joke joke in _userJokes)
         {
             if (SelectedJokes != null && !SelectedJokes.Contains(joke))
                 Instantiate(jokePrefab, userJokesList).SetInfo(joke, false, this);
@@ -64,8 +66,10 @@ public class PCScreen : MonoBehaviour
     }
     private void UpdateTitles()
     {
-        userJokesTitle.text = $"All jokes ({_userJokes.Count - SelectedJokes.Count})";
-        selectedJokesTitle.text = $"Selected jokes ({SelectedJokes.Count}/{(Game.Instance.Progress.Has(Upgrades.PC) ? "25" : "20")})";
+        string temp = Game.Instance.Settings.CorrectLanguageString("All jokes", "Усі жарти");
+        userJokesTitle.text = $"{temp} ({_userJokes.Count - SelectedJokes.Count})";
+        temp = Game.Instance.Settings.CorrectLanguageString("Selected jokes", "Вибрані жарти");
+        selectedJokesTitle.text = $"{temp} ({SelectedJokes.Count}/{(Game.Instance.Progress.Has(Upgrades.PC) ? "25" : "20")})";
     }
     public void MoveToInventory(JokePanel joke)
     {
