@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,13 +60,17 @@ public class PlayerMovement : MonoBehaviour
     public void BanWalking() =>
         isWalkable = false;
 
-    public void MoveTo(Vector3 targetPosition) =>
-        StartCoroutine(MoveToCoroutine(targetPosition));
-
-    private IEnumerator MoveToCoroutine(Vector3 targetPosition)
+    public void MoveTo(Vector3 targetPosition, Action callback) =>
+        StartCoroutine(MoveToCoroutine(targetPosition, callback));
+    public void RotateTo(Vector3 targetRotationVector)
+    {
+        foreach (var rotater in mouseLooks)
+            rotater.RotateTo(targetRotationVector);
+    }
+    private IEnumerator MoveToCoroutine(Vector3 targetPosition, Action callback)
     {
 
-        while ((transform.position - targetPosition).magnitude > 0.01)
+        while ((transform.position - targetPosition).magnitude > 0.05)
         {
             Vector3 position = targetPosition - transform.position;
             position = _speed / 2 * Time.deltaTime * position.normalized;
@@ -74,5 +79,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position = targetPosition;
+        callback();
     }
 }

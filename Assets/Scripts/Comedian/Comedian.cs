@@ -3,6 +3,7 @@ using UnityEngine;
 public class Comedian : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particles;
+    [SerializeField] private Animator _anim;
     private int funScale = 0;
     private PlayRandomSound _sound;
     public void SetFunLvl(int funLvl)
@@ -12,6 +13,7 @@ public class Comedian : MonoBehaviour
     }
     private void Laugh()
     {
+        _anim.SetTrigger("Laugh");
         _particles.Play();
         _sound.Play();
     }

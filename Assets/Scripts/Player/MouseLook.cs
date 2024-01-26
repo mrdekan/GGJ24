@@ -1,3 +1,4 @@
+﻿using System.Collections;
 using UnityEngine;
 
 public class MouseLook : MonoBehaviour
@@ -25,7 +26,29 @@ public class MouseLook : MonoBehaviour
     }
     public void BanRotation() => canRotate = false;
     public void AllowRotation() => canRotate = true;
+    public void RotateTo(Vector3 targetRotationVector)
+    {
+        StartCoroutine(RotateTowardsTarget(targetRotationVector));
+    }
 
+    private IEnumerator RotateTowardsTarget(Vector3 targetRotationVector)
+    {
+        if (_axes == RotationAxes.X) targetRotationVector.x = 0;
+        else if (_axes == RotationAxes.Y) targetRotationVector.y = 0;
+        Quaternion targetQuaternion = Quaternion.Euler(targetRotationVector);
+
+        float elapsedTime = 0f;
+        float rotationTime = 2f;
+
+        while (elapsedTime < rotationTime)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetQuaternion, elapsedTime / rotationTime);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+        transform.rotation = targetQuaternion;
+    }
     private void Update()
     {
         if (!Game.Instance.Pause.IsPaused && canRotate)

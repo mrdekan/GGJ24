@@ -7,13 +7,21 @@ public class ComediansManager : MonoBehaviour
     [SerializeField] private PlayRandomSound _hystericalLaughter;
     [SerializeField] private PlayRandomSound _audience;
     [SerializeField] private AudioClip _cheering;
+    private Joke currentJoke = null;
+    public bool IsJokeTelling => currentJoke != null;
+    public void StartTellingJoke(Joke joke) => currentJoke = joke;
+    public bool AcceptNewJokes = true;
     public void SetComedianFunLvls(int funLvl)
     {
+        AcceptNewJokes = true;
         foreach (Comedian co in _comedians) co.SetFunLvl(funLvl);
     }
+    public bool TellJoke() => TellJoke(currentJoke);
     public bool TellJoke(Joke joke)
     {
-        if (Random.Range(0, 25) == 0)
+        if (!AcceptNewJokes || currentJoke == null) return false;
+        currentJoke = null;
+        if (Random.Range(0, 12) == 0)
             _hystericalLaughter.Play();
         bool res = false;
         foreach (var comedian in _comedians)
@@ -26,6 +34,10 @@ public class ComediansManager : MonoBehaviour
         }
         else
             _audience.Play();
+        if (!res && Game.Instance.Main.JokesCount == 1)
+        {
+            Game.Instance.Main.JokesEnded();
+        }
         return res;
     }
 }
