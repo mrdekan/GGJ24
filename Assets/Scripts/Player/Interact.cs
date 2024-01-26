@@ -6,7 +6,7 @@ public class Interact : MonoBehaviour
     private IInteractable lastInteractable;
     private void Update()
     {
-        Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, (Screen.height / 2), 0)), out RaycastHit hit, Mathf.Infinity, _layers);
+        Physics.Raycast(Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, (Screen.height / 2), 0)), out RaycastHit hit, 3, _layers);
         lastInteractable?.SetOutline(false);
         if (hit.collider != null)
         {

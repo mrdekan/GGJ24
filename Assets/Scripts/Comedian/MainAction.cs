@@ -51,7 +51,8 @@ public class MainAction : MonoBehaviour
             new(JokeRarity.Legendary, "jaaaaaaaaaaa", "Joke tutturu!"),
             new(JokeRarity.Legendary, "jssa joka joka", "Joke tutturu!"),
             new(JokeRarity.Legendary, "joka josa joka", "Joke tutturu!"),
-            new(JokeRarity.Legendary, "jusa joka joka", "Joke tutturu!"),
+            new(JokeRarity.Legendary, "jusa joka joka", "Joke tutturu!")
+
         };
         if (jokes == null)
         {
@@ -139,6 +140,7 @@ public class MainAction : MonoBehaviour
     }
     private void EndGame()
     {
+        _jokesPaperAnim.SetTrigger("Hide");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         playerMovement.AllowAllMovement();
