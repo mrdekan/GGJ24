@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +8,7 @@ using UnityEngine;
 public class MainAction : MonoBehaviour
 {
     private List<Joke> jokes = new();
+    private AudioSource _audio;
     public int JokesCount => jokes.Count + (firstJoke != null ? 1 : 0) + (secondJoke != null ? 1 : 0);
     [SerializeField] private Transform firstJokeSpawn;
     [SerializeField] private Transform secondJokeSpawn;
@@ -36,8 +37,11 @@ public class MainAction : MonoBehaviour
     [SerializeField] private List<int> funLvlsPerWave = new();
     [SerializeField] private int defeatPurchase = 200;
     [SerializeField] private Animator _jokesPaperAnim;
+    [SerializeField] private List<GameObject> _decisionUI;
+    [SerializeField] private TextMeshProUGUI _getMoneyText;
     private void Start()
     {
+        _audio = GetComponent<AudioSource>();
         mainLightMaterial.SetColor("_EmissionColor", startColor);
         startTrigger.OnTrigger += OnStartTriggerEnter;
         goHomeTrigger.OnTrigger += OnGoHomeTrigger;
@@ -105,20 +109,45 @@ public class MainAction : MonoBehaviour
         mainLightMaterial.SetColor("_EmissionColor", winColor);
         if (currentWave <= wavesCount && JokesCount > 0)
         {
-            StartCoroutine(WaveAfterWin());
+            firstJoke?.gameObject.SetActive(false);
+            secondJoke?.gameObject.SetActive(false);
+            _getMoneyText.text = Game.Instance.Settings.CorrectLanguageString($"Take ${rewards[currentWave - 2]}", $"Забрати {rewards[currentWave - 2]}$");
+            foreach (var obj in _decisionUI)
+                obj.SetActive(true);
         }
         else
         {
-            Game.Instance.Progress.AddMoney(rewards[currentWave - 2]);
-            EndGame();
+            GetMoneyClicked();
         }
     }
-    private IEnumerator WaveAfterWin()
+    public void NextWaveClicked()
     {
+        firstJoke?.gameObject.SetActive(true);
+        secondJoke?.gameObject.SetActive(true);
+        foreach (var obj in _decisionUI)
+            obj.SetActive(false);
+        Wave();
+        mainLightMaterial.SetColor("_EmissionColor", startColor);
+    }
+    public void GetMoneyClicked()
+    {
+        _audio.Play();
+        Game.Instance.Progress.AddMoney(rewards[currentWave - 2]);
+        EndGame();
+    }
+    /*private IEnumerator WaveAfterWin()
+    {
+        firstJoke?.gameObject.SetActive(false);
+        secondJoke?.gameObject.SetActive(false);
+        _getMoneyText.text = Game.Instance.Settings.CorrectLanguageString($"Take ${rewards[currentWave - 2]}", $"Забрати {rewards[currentWave - 2]}$");
+        foreach (var obj in _decisionUI)
+            obj.SetActive(true);
         yield return new WaitForSeconds(pause);
         mainLightMaterial.SetColor("_EmissionColor", startColor);
-        Wave();
-    }
+
+
+        //Wave();
+    }*/
     public void StartWaves(GameObject button)
     {
         Wave();
@@ -199,6 +228,7 @@ public class MainAction : MonoBehaviour
             {
                 WaveAfterComedianLaugh();
                 StopAllCoroutines();
+                yield break;
             }
         }
         mainLightMaterial.SetColor("_EmissionColor", defeatColor);
