@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainAction : MonoBehaviour
 {
@@ -39,6 +40,8 @@ public class MainAction : MonoBehaviour
     [SerializeField] private Animator _jokesPaperAnim;
     [SerializeField] private List<GameObject> _decisionUI;
     [SerializeField] private TextMeshProUGUI _getMoneyText;
+    [SerializeField] private Button _acceptButton;
+    private bool isTraining = false;
     private void Start()
     {
         _audio = GetComponent<AudioSource>();
@@ -49,12 +52,12 @@ public class MainAction : MonoBehaviour
         timerText.text = $"0:{waveTime}";
         jokes = Game.Instance.Jokes?.SelectedJokes ?? new()
         {
-            new(JokeRarity.Default, "joka joka joka", "Joke tutel!"),
+            /*new(JokeRarity.Default, "joka joka joka", "Joke tutel!"),
             new(JokeRarity.Legendary, "joka joka joka", "Joke tutelki!"),
             new(JokeRarity.Legendary, "joka joka joka", "Joke tutturu!"),
             new(JokeRarity.Legendary, "jaaaaaaaaaaa", "Joke tutturu!"),
             new(JokeRarity.Legendary, "jssa joka joka", "Joke tutturu!"),
-            new(JokeRarity.Legendary, "joka josa joka", "Joke tutturu!"),
+            new(JokeRarity.Legendary, "joka josa joka", "Joke tutturu!"),*/
             new(JokeRarity.Legendary, "jusa joka joka", "Joke tutturu!")
 
         };
@@ -72,6 +75,10 @@ public class MainAction : MonoBehaviour
         jokes.Add(new(5, "joka joka joka", "Joke tutturu!"));
         jokes.Add(new(15, "joka joka joka", "Joke tutellya!"));*/
     }
+    public void SetIsOnTraining()
+    {
+        isTraining = true;
+    }
     #region Triggers
     private void OnStartTriggerEnter(Collider other, Action callback)
     {
@@ -84,7 +91,6 @@ public class MainAction : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         plMovement.MoveTo(new Vector3(0, plMovement.transform.position.y, 0), ShowJokesPaper);
-        //Wave();
         callback();
     }
     private void OnGoHomeTrigger(Collider other, Action callback)
@@ -109,11 +115,21 @@ public class MainAction : MonoBehaviour
         mainLightMaterial.SetColor("_EmissionColor", winColor);
         if (currentWave <= wavesCount && JokesCount > 0)
         {
-            firstJoke?.gameObject.SetActive(false);
-            secondJoke?.gameObject.SetActive(false);
+            try
+            {
+                firstJoke?.gameObject?.SetActive(false);
+            }
+            catch { }
+            try
+            {
+                secondJoke?.gameObject?.SetActive(false);
+            }
+            catch { }
             _getMoneyText.text = Game.Instance.Settings.CorrectLanguageString($"Take ${rewards[currentWave - 2]}", $"Забрати {rewards[currentWave - 2]}$");
             foreach (var obj in _decisionUI)
                 obj.SetActive(true);
+            if (isTraining || JokesCount <= 1)
+                _acceptButton.interactable = false;
         }
         else
         {
@@ -122,8 +138,16 @@ public class MainAction : MonoBehaviour
     }
     public void NextWaveClicked()
     {
-        firstJoke?.gameObject.SetActive(true);
-        secondJoke?.gameObject.SetActive(true);
+        try
+        {
+            firstJoke?.gameObject?.SetActive(true);
+        }
+        catch { }
+        try
+        {
+            secondJoke?.gameObject?.SetActive(true);
+        }
+        catch { }
         foreach (var obj in _decisionUI)
             obj.SetActive(false);
         Wave();
@@ -135,19 +159,6 @@ public class MainAction : MonoBehaviour
         Game.Instance.Progress.AddMoney(rewards[currentWave - 2]);
         EndGame();
     }
-    /*private IEnumerator WaveAfterWin()
-    {
-        firstJoke?.gameObject.SetActive(false);
-        secondJoke?.gameObject.SetActive(false);
-        _getMoneyText.text = Game.Instance.Settings.CorrectLanguageString($"Take ${rewards[currentWave - 2]}", $"Забрати {rewards[currentWave - 2]}$");
-        foreach (var obj in _decisionUI)
-            obj.SetActive(true);
-        yield return new WaitForSeconds(pause);
-        mainLightMaterial.SetColor("_EmissionColor", startColor);
-
-
-        //Wave();
-    }*/
     public void StartWaves(GameObject button)
     {
         Wave();

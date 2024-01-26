@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private TextMeshProUGUI _subtitles;
+    [SerializeField] private GameObject _subtitlesPanel;
     [SerializeField] private float _subtitlesTimer;
     [SerializeField] private float _printDelay = 0.05f;
     private string currentPrintingText = "";
@@ -19,7 +20,7 @@ public class UIManager : MonoBehaviour
     private IEnumerator PrintCoroutine(string text)
     {
         currentPrintingText = text;
-        _subtitles.gameObject.SetActive(true);
+        _subtitlesPanel.SetActive(true);
         _subtitles.text = "";
         char[] arrayText = text.ToCharArray();
         int i = 0;
@@ -35,7 +36,7 @@ public class UIManager : MonoBehaviour
     private IEnumerator HideSubtitle()
     {
         yield return new WaitForSeconds(_subtitlesTimer);
-        _subtitles.gameObject.SetActive(false);
+        _subtitlesPanel.SetActive(false);
         currentPrintingText = "";
     }
     public void SetPausePanel(bool isPaused) => _pausePanel.SetActive(isPaused);

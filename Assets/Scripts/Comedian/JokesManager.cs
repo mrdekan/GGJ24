@@ -3,19 +3,20 @@ using UnityEngine;
 
 public class JokesManager : MonoBehaviour
 {
-    public bool HasJokes => SelectedJokes != null && SelectedJokes.Count > 0;
+    public bool HasJokes => jokesSetted;
     public List<Joke> UserJokes { get; private set; }
     public List<Joke> SelectedJokes { get; private set; }
     public delegate void NewJokes(List<Joke> jokes);
     public event NewJokes AddedJokes;
+    private bool jokesSetted = false;
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
     public void LoadJokes()
     {
         UserJokes = FileWorker.LoadUserJokes();
-        SelectedJokes = new();
+        SelectedJokes = FileWorker.LoadSelectedJokes();
     }
     public void AddUserJokes(List<Joke> newJokes)
     {
@@ -25,6 +26,7 @@ public class JokesManager : MonoBehaviour
     }
     public void SetJokes(List<Joke> jokes)
     {
+        jokesSetted = true;
         SelectedJokes = jokes;
         FileWorker.SaveSelectedJokes(SelectedJokes);
     }

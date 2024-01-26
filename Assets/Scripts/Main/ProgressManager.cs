@@ -10,6 +10,14 @@ public class ProgressManager : MonoBehaviour
     private UpgradesManager _upgradesManager;
     public delegate void BalanceUpdated();
     public event BalanceUpdated OnBalanceUpdate;
+    public bool CompletedTraining => _progress.TrainingCompleted;
+    public delegate void BaseEvent();
+    public BaseEvent OnJokesBought;
+    public void TrainingComplete()
+    {
+        _progress.TrainingCompleted = true;
+        Save();
+    }
     private void Start()
     {
         _upgradesManager = GetComponent<UpgradesManager>();
@@ -46,6 +54,7 @@ public class ProgressManager : MonoBehaviour
         if (_progress.UnlockedUpgrades.Contains(upgrade) || price * 1000 > Balance) return;
         if (upgrade == Upgrades.Jokes)
         {
+            OnJokesBought?.Invoke();
             Game.Instance.Jokes.AddUserJokes(GlobalJokesList.GenerateNewJokes(Game.Instance.Jokes.UserJokes, Has(Upgrades.InputDevices), Has(Upgrades.Chair)));
             _progress.Balance -= (int)((price * 1000) * (UnlockedUpgrades.Contains(Upgrades.Monitor) ? 0.7 : 1));
             OnBalanceUpdate?.Invoke();

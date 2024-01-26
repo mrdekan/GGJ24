@@ -8,7 +8,15 @@ public class ComediansManager : MonoBehaviour
     [SerializeField] private PlayRandomSound _audience;
     [SerializeField] private AudioClip _cheering;
     private Joke currentJoke = null;
+    private bool isTraining = false;
+    private int currentJokeNumber = 0;
+    public delegate void BaseEvent(int currentJoke);
+    public event BaseEvent OnJoke;
     public bool IsJokeTelling => currentJoke != null;
+    public void SetIsOnTraining()
+    {
+        isTraining = true;
+    }
     public void StartTellingJoke(Joke joke) => currentJoke = joke;
     public bool AcceptNewJokes = true;
     public void SetComedianFunLvls(int funLvl)
@@ -21,6 +29,24 @@ public class ComediansManager : MonoBehaviour
     {
         if (!AcceptNewJokes || currentJoke == null) return false;
         currentJoke = null;
+
+        if (isTraining)
+        {
+            bool willLaugh = currentJokeNumber == 1;
+            if (willLaugh)
+            {
+                foreach (var co in _comedians)
+                {
+                    co.Laugh();
+                }
+                _audience.Play(_cheering);
+                Game.Instance.Main.WaveAfterComedianLaugh();
+            }
+            OnJoke?.Invoke(currentJokeNumber);
+            currentJokeNumber++;
+            return willLaugh;
+        }
+
         if (Random.Range(0, 12) == 0)
             _hystericalLaughter.Play();
         bool res = false;

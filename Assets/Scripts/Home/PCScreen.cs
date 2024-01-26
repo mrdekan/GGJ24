@@ -17,6 +17,8 @@ public class PCScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI balance;
     [SerializeField] private GameObject newJokesPanel;
     [SerializeField] private Transform newJokesParent;
+    public delegate void BaseEvent();
+    public BaseEvent OnShopOpen;
     public List<Joke> SelectedJokes { get; private set; }
     private List<Joke> _userJokes;
     private void Awake()
@@ -110,6 +112,7 @@ public class PCScreen : MonoBehaviour
     }
     public void OpenShop()
     {
+        OnShopOpen?.Invoke();
         shop.SetActive(true);
         textEditor.SetActive(false);
     }

@@ -15,7 +15,7 @@ public class Comedian : MonoBehaviour
         jokeNumber = 0;
         _sound = GetComponent<PlayRandomSound>();
     }
-    private void Laugh()
+    public void Laugh()
     {
         _anim.SetTrigger("Laugh");
         _particles.Play();

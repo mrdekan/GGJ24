@@ -13,6 +13,10 @@ public class Bootstrapper : MonoBehaviour
     [SerializeField] private GameObject player;
     [SerializeField] private JokesManager jokesManager;
     [SerializeField] private ProgressManager progressManager;
+    [SerializeField] private ResetProgress resetProgress;
+    [SerializeField] private Training training;
+    [SerializeField] private Monitor monitor;
+    [SerializeField] private PCScreen screen;
     private void Awake()
     {
         settingsManager.LoadSettings();
@@ -23,5 +27,7 @@ public class Bootstrapper : MonoBehaviour
         if (pauseManager && uiManager)
             pauseManager.OnPauseChange += uiManager.SetPausePanel;
         Game.Instance.SetManagers(settingsManager, musicManager, pauseManager, uiManager, poolManager, mainAction, comedianManager, buttonManager, player, jokesManager, progressManager);
+        resetProgress?.Init();
+        training?.Init(monitor, screen);
     }
 }

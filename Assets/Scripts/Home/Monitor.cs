@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Monitor : MonoBehaviour, IInteractable
 {
-    //private Outline _outline;
     [Range(0, 10)]
     [SerializeField] private float outlineWidth = 10;
     [SerializeField] private GameObject _screenPanel;
@@ -13,10 +12,12 @@ public class Monitor : MonoBehaviour, IInteractable
     private bool _enabled = false;
     [SerializeField] private Outline outlineOld;
     [SerializeField] private Outline outlineNew;
+    public delegate void BaseEvent();
+    public BaseEvent OnOpen;
+    public BaseEvent OnPrint;
     private void Start()
     {
         _screen = _screenPanel.GetComponent<PCScreen>();
-        //_outline = GetComponent<Outline>();
         SetOutline(false);
     }
     public void SetInteractable(bool state) => _enabled = state;
@@ -30,6 +31,7 @@ public class Monitor : MonoBehaviour, IInteractable
             Cursor.visible = true;
             _playerMovement ??= Game.Instance.Player.GetComponent<PlayerMovement>();
             _playerMovement.BanAllMovement();
+            OnOpen?.Invoke(); // for training
         }
     }
     public void ReleaseScreen()
@@ -66,8 +68,9 @@ public class Monitor : MonoBehaviour, IInteractable
     }
     public void Print()
     {
+        OnPrint?.Invoke();
         ReleaseScreen();
         _printer.Print(_screen.SelectedJokes);
-        FileWorker.SaveSelectedJokes(_screen.SelectedJokes);
+        //FileWorker.SaveSelectedJokes(_screen.SelectedJokes);
     }
 }
