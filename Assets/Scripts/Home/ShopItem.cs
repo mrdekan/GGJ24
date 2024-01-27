@@ -25,6 +25,7 @@ public class ShopItem : MonoBehaviour
         else if (product != Upgrades.Jokes && Game.Instance.Progress.Has(Upgrades.Headphones))
             price *= 0.9f;
         priceOnButton.text = $"${price}k";
+        image.sprite = icon;
         if (product != Upgrades.Jokes && Game.Instance.Progress.Has(product))
         {
             button.interactable = false;

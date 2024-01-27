@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +19,7 @@ public class JokePanel : MonoBehaviour
         JokeInfo = joke;
         title.text = joke.Title;
         content.text = joke.Text;
-        buttonText.text = isSelected ? "Remove" : "Add";
+        buttonText.text = isSelected ? Game.Instance.Settings.CorrectLanguageString("Remove", "Видалити") : Game.Instance.Settings.CorrectLanguageString("Add", "Додати");
         _screen = screen;
         _isSelected = isSelected;
         button.onClick.AddListener(delegate { HandleClick(); });
@@ -42,6 +42,6 @@ public class JokePanel : MonoBehaviour
         else
             _screen.MoveToSelected(this);
         _isSelected = !_isSelected;
-        buttonText.text = _isSelected ? "Remove" : "Add";
+        buttonText.text = _isSelected ? Game.Instance.Settings.CorrectLanguageString("Remove", "Видалити") : Game.Instance.Settings.CorrectLanguageString("Add", "Додати");
     }
 }

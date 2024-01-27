@@ -10,10 +10,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float _subtitlesTimer;
     [SerializeField] private float _printDelay = 0.05f;
     private string currentPrintingText = "";
-    public void ShowSubtitle(string engSubtitle, string uaSubtitle)
+    public void ShowSubtitle(string engSubtitle, string uaSubtitle, bool forse = false)
     {
         string temp = Game.Instance.Settings.CorrectLanguageString(engSubtitle, uaSubtitle);
-        if (temp == currentPrintingText) return;
+        if (temp == currentPrintingText && !forse) return;
         StopAllCoroutines();
         StartCoroutine(PrintCoroutine(temp));
     }

@@ -65,17 +65,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Remove
+  m_text: "\u0412\u0438\u0434\u0430\u043B\u0438\u0442\u0438"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb3b17aa4bf987e49b48f6e4996976c8, type: 2}
+  m_sharedMaterial: {fileID: -3187267280358359515, guid: eb3b17aa4bf987e49b48f6e4996976c8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -458,8 +459,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Fun lvl:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6669c540208aaa8489df0990f4640f26, type: 2}
-  m_sharedMaterial: {fileID: 1818131747718149986, guid: 6669c540208aaa8489df0990f4640f26,
+  m_fontAsset: {fileID: 11400000, guid: eb3b17aa4bf987e49b48f6e4996976c8, type: 2}
+  m_sharedMaterial: {fileID: -3187267280358359515, guid: eb3b17aa4bf987e49b48f6e4996976c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -595,8 +596,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6669c540208aaa8489df0990f4640f26, type: 2}
-  m_sharedMaterial: {fileID: 1818131747718149986, guid: 6669c540208aaa8489df0990f4640f26,
+  m_fontAsset: {fileID: 11400000, guid: eb3b17aa4bf987e49b48f6e4996976c8, type: 2}
+  m_sharedMaterial: {fileID: -3187267280358359515, guid: eb3b17aa4bf987e49b48f6e4996976c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -880,8 +881,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Joke content
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6669c540208aaa8489df0990f4640f26, type: 2}
-  m_sharedMaterial: {fileID: 1818131747718149986, guid: 6669c540208aaa8489df0990f4640f26,
+  m_fontAsset: {fileID: 11400000, guid: eb3b17aa4bf987e49b48f6e4996976c8, type: 2}
+  m_sharedMaterial: {fileID: -3187267280358359515, guid: eb3b17aa4bf987e49b48f6e4996976c8,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1090,8 +1091,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -79, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -69.65106, y: 0}
+  m_SizeDelta: {x: 128, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &16346010700411204
 CanvasRenderer:
@@ -1121,7 +1122,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 6aeb56c8a934511478e814d9ee9a9598, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1130,7 +1131,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 5
 --- !u!114 &4533596756336481394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1152,10 +1153,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_NormalColor: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+    m_HighlightedColor: {r: 0.4433962, g: 0.4433962, b: 0.4433962, a: 1}
+    m_PressedColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
+    m_SelectedColor: {r: 0.58431375, g: 0.58431375, b: 0.58431375, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1

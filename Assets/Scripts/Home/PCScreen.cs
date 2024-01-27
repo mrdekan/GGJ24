@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PCScreen : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PCScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI balance;
     [SerializeField] private GameObject newJokesPanel;
     [SerializeField] private Transform newJokesParent;
+    [SerializeField] private Button printBtn;
     public delegate void BaseEvent();
     public BaseEvent OnShopOpen;
     public List<Joke> SelectedJokes { get; private set; }
@@ -62,12 +64,13 @@ public class PCScreen : MonoBehaviour
                 Instantiate(jokePrefab, userJokesList).SetInfo(joke, false, this);
         }
     }
-    private void UpdateBalance()
-    {
-        balance.text = $"${Math.Round(Game.Instance.Progress.Balance / 1000f, 1)}k";
-    }
+    private void UpdatePrintBtn() =>
+        printBtn.interactable = SelectedJokes.Count > 0;
+    private void UpdateBalance() =>
+        balance.text = $"${Math.Round(Game.Instance.Progress.Balance / 1000f, 2)}k";
     private void UpdateTitles()
     {
+        UpdatePrintBtn();
         string temp = Game.Instance.Settings.CorrectLanguageString("All jokes", "Усі жарти");
         userJokesTitle.text = $"{temp} ({_userJokes.Count - SelectedJokes.Count})";
         temp = Game.Instance.Settings.CorrectLanguageString("Selected jokes", "Вибрані жарти");

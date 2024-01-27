@@ -11,8 +11,6 @@ public class MainAction : MonoBehaviour
     private List<Joke> jokes = new();
     private AudioSource _audio;
     public int JokesCount => jokes.Count + (firstJoke != null ? 1 : 0) + (secondJoke != null ? 1 : 0);
-    [SerializeField] private Transform firstJokeSpawn;
-    [SerializeField] private Transform secondJokeSpawn;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private Transform canvas;
     [SerializeField] private int wavesCount = 5;
@@ -40,8 +38,12 @@ public class MainAction : MonoBehaviour
     [SerializeField] private Animator _jokesPaperAnim;
     [SerializeField] private List<GameObject> _decisionUI;
     [SerializeField] private TextMeshProUGUI _getMoneyText;
+    [SerializeField] private TextMeshProUGUI _balance;
+    [SerializeField] private TextMeshProUGUI _jokesLeft;
     [SerializeField] private Button _acceptButton;
     private bool isTraining = false;
+    public delegate void BaseEvent();
+    public BaseEvent OnTimerEnd;
     private void Start()
     {
         _audio = GetComponent<AudioSource>();
@@ -69,11 +71,12 @@ public class MainAction : MonoBehaviour
                 jokes.Add(new(JokeRarity.Default, "joke joke joke", "Joke title!"));
             }
         }
-        /*jokes.Add(new(5, "joke joke joke", "Joke title!"));
-        jokes.Add(new(10, "joka joka joka", "Joke tutel!"));
-        jokes.Add(new(3, "joka joka joka", "Joke tutelki!"));
-        jokes.Add(new(5, "joka joka joka", "Joke tutturu!"));
-        jokes.Add(new(15, "joka joka joka", "Joke tutellya!"));*/
+        UpdateStats();
+    }
+    public void UpdateStats()
+    {
+        _balance.text = $"{Game.Instance.Settings.CorrectLanguageString("Balance", "Баланс")}: ${Math.Round((Game.Instance.Progress.Balance) / 1000f, 2)}k";
+        _jokesLeft.text = $"{Game.Instance.Settings.CorrectLanguageString("Jokes left", "Жартів залишилося")}: {JokesCount}";
     }
     public void SetIsOnTraining()
     {
@@ -85,7 +88,7 @@ public class MainAction : MonoBehaviour
         if (currentWave > 1) return;
         var plMovement = other.gameObject.GetComponent<PlayerMovement>();
         if (plMovement == null) return;
-        SetPlayerMovement(plMovement);
+        playerMovement = plMovement;
         plMovement.BanAllMovement();
         plMovement.RotateTo(new Vector3(0, 0, 0));
         Cursor.visible = true;
@@ -104,10 +107,6 @@ public class MainAction : MonoBehaviour
     private void ShowJokesPaper()
     {
         _jokesPaperAnim.SetTrigger("Show");
-    }
-    public void SetPlayerMovement(PlayerMovement pm)
-    {
-        if (pm != null) playerMovement = pm;
     }
     public void WaveAfterComedianLaugh()
     {
@@ -181,6 +180,7 @@ public class MainAction : MonoBehaviour
     private void EndGame()
     {
         _jokesPaperAnim.SetTrigger("Hide");
+        UpdateStats();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         playerMovement.AllowAllMovement();
@@ -194,12 +194,13 @@ public class MainAction : MonoBehaviour
     public void UpdateOneJoke(JokeOnPaper previous)
     {
         if (firstJoke == previous && jokes.Count > 0)
-            firstJoke = SpawnJoke(GetNextJoke(), firstJokeSpawn.position);
+            firstJoke = SpawnJoke(GetNextJoke());
         else if (jokes.Count > 0)
-            secondJoke = SpawnJoke(GetNextJoke(), secondJokeSpawn.position);
+            secondJoke = SpawnJoke(GetNextJoke());
         Destroy(previous.gameObject);
+        UpdateStats();
     }
-    private JokeOnPaper SpawnJoke(Joke joke, Vector3 position)
+    private JokeOnPaper SpawnJoke(Joke joke)
     {
         var jokeObj = Instantiate(jokePrefab, canvas);
         jokeObj.SetInfo(joke);
@@ -208,9 +209,9 @@ public class MainAction : MonoBehaviour
     private void UpdateJokes()
     {
         if (jokes.Count > 0 && firstJoke == null)
-            firstJoke = SpawnJoke(GetNextJoke(), firstJokeSpawn.position);
+            firstJoke = SpawnJoke(GetNextJoke());
         if (jokes.Count > 0 && secondJoke == null)
-            secondJoke = SpawnJoke(GetNextJoke(), secondJokeSpawn.position);
+            secondJoke = SpawnJoke(GetNextJoke());
     }
     private Joke GetNextJoke()
     {
@@ -242,8 +243,15 @@ public class MainAction : MonoBehaviour
                 yield break;
             }
         }
-        mainLightMaterial.SetColor("_EmissionColor", defeatColor);
-        Game.Instance.Progress.PurchaseMoney(defeatPurchase, true);
-        EndGame();
+        if (!isTraining)
+        {
+            mainLightMaterial.SetColor("_EmissionColor", defeatColor);
+            Game.Instance.Progress.PurchaseMoney(defeatPurchase, true);
+            EndGame();
+        }
+        else
+        {
+            OnTimerEnd?.Invoke();
+        }
     }
 }

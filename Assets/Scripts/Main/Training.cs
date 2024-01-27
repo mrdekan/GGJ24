@@ -16,14 +16,18 @@ public class Training : MonoBehaviour
     private string uaPrint = "Тепер додайте жарти до списку для друку";
     private string engTakePaper = "Take the printed list and you can go";
     private string uaTakePaper = "Беріть надрукований список і можете вирушати";
-    private string engStart = "Go to the middle of the stage and start your performance there";
-    private string uaStart = "Вийдіть на середину сцени там розпочніть свій виступ";
+    private string engStart = "Go to the middle of the stage and start your performance";
+    private string uaStart = "Вийдіть на середину сцени та розпочніть свій виступ";
     private string engNotLaugh = "They don't think it's funny, try again";
     private string uaNotLaugh = "Здається, що їм не смішно... Спробуйте ще раз";
     private string engTakeMoney = "There aren't many jokes left, it's better to take the money";
     private string uaTakeMoney = "Жартів залишилося небагато, краще забрати кошти";
-    private string engFinal = "Now you can upgrade your equipment or order new jokes";
-    private string uaFinal = "Тепер можете оновити спорядження чи замовити нові жарти";
+    private string engLast = "Now you can upgrade your equipment or order new jokes";
+    private string uaLast = "Тепер можете оновити спорядження чи замовити нові жарти";
+
+    // optional
+    private string engTimerEnd = "Since this is practice, you can continue, but in the real game, you would lose $250";
+    private string uaTimerEnd = "Оскільки це тренування, то Ви можете продовжити, але у реальній грі Ви втратили би $250 за спробу";
     private Monitor _monitor;
     private PCScreen _screen;
     public void Init(Monitor monitor, PCScreen screen)
@@ -48,9 +52,8 @@ public class Training : MonoBehaviour
             }
             else
             {
-                Subtitle(engFinal, uaFinal);
+                StartCoroutine(Last());
                 Game.Instance.Progress.TrainingComplete();
-
             }
         }
         else if (sceneID == 1)
@@ -58,8 +61,14 @@ public class Training : MonoBehaviour
             Subtitle(engStart, uaStart);
             Game.Instance.Comedians.SetIsOnTraining();
             Game.Instance.Main.SetIsOnTraining();
+            Game.Instance.Main.OnTimerEnd += OnTimerEnd;
             Game.Instance.Comedians.OnJoke += OnJoke;
         }
+    }
+    private void OnTimerEnd()
+    {
+        Subtitle(engTimerEnd, uaTimerEnd);
+        Game.Instance.Main.OnTimerEnd -= OnTimerEnd;
     }
     private void OnJoke(int jokeNum)
     {
@@ -71,7 +80,7 @@ public class Training : MonoBehaviour
         {
             Subtitle(engTakeMoney, uaTakeMoney);
             Game.Instance.Comedians.OnJoke -= OnJoke;
-            Game.Instance.Progress.AddMoney(1000);
+            Game.Instance.Progress.AddMoney(1750);
         }
     }
     private void Print()
@@ -95,6 +104,11 @@ public class Training : MonoBehaviour
         Subtitle(engStore, uaStore);
         _screen.OnShopOpen -= ShopOpen;
     }
+    private IEnumerator Last()
+    {
+        yield return new WaitForSeconds(1);
+        Subtitle(engLast, uaLast);
+    }
     private IEnumerator First()
     {
         yield return new WaitForSeconds(5);
@@ -102,6 +116,6 @@ public class Training : MonoBehaviour
     }
     private void Subtitle(string eng, string ua)
     {
-        Game.Instance.UI.ShowSubtitle(eng, ua);
+        Game.Instance.UI.ShowSubtitle(eng, ua, true);
     }
 }
