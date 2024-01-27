@@ -16166,7 +16166,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Lorem ipsum
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6669c540208aaa8489df0990f4640f26, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: eb3b17aa4bf987e49b48f6e4996976c8, type: 2}
   m_sharedMaterial: {fileID: 1818131747718149986, guid: 6669c540208aaa8489df0990f4640f26,
     type: 2}
   m_fontSharedMaterials: []
@@ -16231,7 +16231,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: -1.4354553}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1332759719
