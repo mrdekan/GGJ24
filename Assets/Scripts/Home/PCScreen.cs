@@ -74,7 +74,7 @@ public class PCScreen : MonoBehaviour
         string temp = Game.Instance.Settings.CorrectLanguageString("All jokes", "Усі жарти");
         userJokesTitle.text = $"{temp} ({_userJokes.Count - SelectedJokes.Count})";
         temp = Game.Instance.Settings.CorrectLanguageString("Selected jokes", "Вибрані жарти");
-        selectedJokesTitle.text = $"{temp} ({SelectedJokes.Count}/{(Game.Instance.Progress.Has(Upgrades.PC) ? "25" : "20")})";
+        selectedJokesTitle.text = $"{temp} ({SelectedJokes.Count}/{(Game.Instance.Progress.Has(Upgrades.PC) ? "15" : "10")})";
     }
     public void MoveToInventory(JokePanel joke)
     {
@@ -82,12 +82,13 @@ public class PCScreen : MonoBehaviour
         SelectedJokes.Remove(joke.JokeInfo);
         UpdateTitles();
     }
-    public void MoveToSelected(JokePanel joke)
+    public bool MoveToSelected(JokePanel joke)
     {
-        if (SelectedJokes.Count >= (Game.Instance.Progress.Has(Upgrades.PC) ? 25 : 20)) return;
+        if (SelectedJokes.Count >= (Game.Instance.Progress.Has(Upgrades.PC) ? 15 : 10)) return false;
         joke.transform.SetParent(selectedJokesList);
         SelectedJokes.Add(joke.JokeInfo);
         UpdateTitles();
+        return true;
     }
     private void SetSelectedJokes(List<Joke> jokes)
     {

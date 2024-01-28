@@ -33,6 +33,7 @@ public class Comedian : MonoBehaviour
                 jokeMultipier = 1.75f;
                 break;
         }
+        if (jokeNumber == 0 && joke.Rarity == JokeRarity.Default) return false;
         jokeNumber++;
         if (Random.value * 100 * difficulty * jokeMultipier <= (int)joke.Rarity)
         {

@@ -41,6 +41,7 @@ public class MainAction : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _balance;
     [SerializeField] private TextMeshProUGUI _jokesLeft;
     [SerializeField] private Button _acceptButton;
+    [SerializeField] private PlayRandomSound _defeatSound;
     private bool isTraining = false;
     public delegate void BaseEvent();
     public BaseEvent OnTimerEnd;
@@ -107,6 +108,11 @@ public class MainAction : MonoBehaviour
     private void ShowJokesPaper()
     {
         _jokesPaperAnim.SetTrigger("Show");
+    }
+    public void StartTellingJoke()
+    {
+        firstJoke?.SetInteractable(false);
+        secondJoke?.SetInteractable(false);
     }
     public void WaveAfterComedianLaugh()
     {
@@ -175,6 +181,7 @@ public class MainAction : MonoBehaviour
         StopAllCoroutines();
         mainLightMaterial.SetColor("_EmissionColor", defeatColor);
         Game.Instance.Progress.PurchaseMoney(defeatPurchase, true);
+        _defeatSound.Play();
         EndGame();
     }
     private void EndGame()
@@ -198,6 +205,8 @@ public class MainAction : MonoBehaviour
         else if (jokes.Count > 0)
             secondJoke = SpawnJoke(GetNextJoke());
         Destroy(previous.gameObject);
+        firstJoke?.SetInteractable(true);
+        secondJoke?.SetInteractable(true);
         UpdateStats();
     }
     private JokeOnPaper SpawnJoke(Joke joke)
@@ -247,6 +256,7 @@ public class MainAction : MonoBehaviour
         {
             mainLightMaterial.SetColor("_EmissionColor", defeatColor);
             Game.Instance.Progress.PurchaseMoney(defeatPurchase, true);
+            _defeatSound.Play();
             EndGame();
         }
         else

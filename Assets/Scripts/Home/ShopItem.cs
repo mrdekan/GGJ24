@@ -31,6 +31,18 @@ public class ShopItem : MonoBehaviour
             button.interactable = false;
             priceOnButton.text = Game.Instance.Settings.CorrectLanguageString("Already bought", "Вже куплено");
         }
+        if (product == Upgrades.Jokes)
+        {
+            UpdateCanBuyJokes();
+        }
+    }
+    private void UpdateCanBuyJokes()
+    {
+        if (Game.Instance.Jokes.UserJokes.Count >= GlobalJokesList.TotalJokesCount())
+        {
+            button.interactable = false;
+            priceOnButton.text = Game.Instance.Settings.CorrectLanguageString("The jokes are over", "Жарти скінчились");
+        }
     }
     public void Buy()
     {
@@ -40,6 +52,10 @@ public class ShopItem : MonoBehaviour
         {
             button.interactable = false;
             priceOnButton.text = Game.Instance.Settings.CorrectLanguageString("Already bought", "Вже куплено");
+        }
+        else
+        {
+            UpdateCanBuyJokes();
         }
     }
 }

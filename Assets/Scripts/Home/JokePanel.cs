@@ -40,7 +40,7 @@ public class JokePanel : MonoBehaviour
         if (_isSelected)
             _screen.MoveToInventory(this);
         else
-            _screen.MoveToSelected(this);
+            if (!_screen.MoveToSelected(this)) return;
         _isSelected = !_isSelected;
         buttonText.text = _isSelected ? Game.Instance.Settings.CorrectLanguageString("Remove", "Видалити") : Game.Instance.Settings.CorrectLanguageString("Add", "Додати");
     }

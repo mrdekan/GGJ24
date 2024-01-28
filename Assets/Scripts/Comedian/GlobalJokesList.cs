@@ -109,6 +109,12 @@ public static class GlobalJokesList
         }
         return new List<Joke>();
     }
+    public static int TotalJokesCount()
+    {
+        if (Game.Instance.Settings.Language == Languages.En)
+            return _defJokes.Count + _rareJokes.Count + _epicJokes.Count + _legendJokes.Count;
+        return _uaDefJokes.Count + _uaRareJokes.Count + _uaEpicJokes.Count + _legendJokes.Count;
+    }
     public static List<Joke> GenerateNewJokes(List<Joke> current, bool increaseLegendChance, bool extraJoke)
     {
         var def = RemoveListFromList(GetCorrectLanguageList(JokeRarity.Default), current);

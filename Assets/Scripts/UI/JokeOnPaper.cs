@@ -11,11 +11,15 @@ public class JokeOnPaper : MonoBehaviour
     [SerializeField] private List<AudioClip> _clips = new();
     [SerializeField] private List<Image> funLvlImages;
     [SerializeField] private List<Color> funLvlColors;
+    [SerializeField] private Button btn;
     private AudioSource _audio;
     private void Start()
     {
         _audio = GetComponent<AudioSource>();
-
+    }
+    public void SetInteractable(bool state)
+    {
+        btn.interactable = state;
     }
     public void SetInfo(Joke joke)
     {
@@ -35,6 +39,7 @@ public class JokeOnPaper : MonoBehaviour
     public void Clicked()
     {
         Game.Instance.Comedians.StartTellingJoke(_joke);
+        Game.Instance.Main.StartTellingJoke();
         StartCoroutine(Play());
     }
     private IEnumerator Play()

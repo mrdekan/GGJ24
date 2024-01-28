@@ -5814,13 +5814,13 @@ PrefabInstance:
         type: 3}
       propertyPath: uaDescription
       value: "\u041D\u0430\u0434\u0430\u0454 \u043C\u043E\u0436\u043B\u0438\u0432\u0456\u0441\u0442\u044C
-        \u0434\u0440\u0443\u043A\u0443\u0432\u0430\u0442\u0438 25 \u0436\u0430\u0440\u0442\u0456\u0432
-        \u0437\u0430\u043C\u0456\u0441\u0442\u044C 20."
+        \u0434\u0440\u0443\u043A\u0443\u0432\u0430\u0442\u0438 15 \u0436\u0430\u0440\u0442\u0456\u0432
+        \u0437\u0430\u043C\u0456\u0441\u0442\u044C 10."
       objectReference: {fileID: 0}
     - target: {fileID: 1707034239979321972, guid: f20bbbcce3c2478498453d92791aeb22,
         type: 3}
       propertyPath: engDescription
-      value: Makes it possible to print 25 jokes instead of 20.
+      value: Makes it possible to print 15 jokes instead of 10.
       objectReference: {fileID: 0}
     - target: {fileID: 1831514902461195880, guid: f20bbbcce3c2478498453d92791aeb22,
         type: 3}
